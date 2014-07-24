@@ -1,0 +1,970 @@
+dCdt = expression(a*R*C - m*C)
+deriv(dCdt, "C")
+deriv(dCdt, "C")-> aa
+print(aa)
+plot(1:10,1:10)
+plot(1:10,1:10, main=aa)
+?gradient
+??gradient
+??grad
+951+1771+569+974
+dRdt = expression(b*R-a*R*C)
+dCdt = expression(k*a*R*C - d*C)
+Rstar = solve(dRdt=0, "R")
+dR = deriv(dRdt, "R")
+Rstar = function(d, k, a) d/(k*a))#
+Cstar = function(b, a) b/a
+Rstar = function(d, k, a) d/(k*a)
+dR
+dC = deriv(dCdt, "C")
+install.packages("ecoMod")
+install.packages("deSolve")
+Range kutta#
+dNdt = function(N, lambda) lambda*N#
+#
+# amount of change#
+k1 = dNdt(N0, lambda=1)#
+k2 = dNdt(N0 + 0.5*k1)#
+k3 = dNdt(N0 + 0.5*k2)#
+k4 = dNdt(N0 + k3)#
+delta = (k1 + 2*k2 + 2*k3 + k4)/6#
+#
+N1 = NO + delta#
+#
+library(deSolve)#
+model = function(Time, State, Pars) {#
+	with(as.list(c(State, Pars)), {#
+		dR = r*R*(1-R/k) - a1*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# parameters#
+r=1#
+a=1#
+b=5#
+K=0.6#
+#
+pars = c(r=r, a=a, b=b, K=K)#
+#
+# initial conditions#
+T0 = c(R=1, C=0.1)#
+#
+# simulation consitions#
+times = seq(0, 1000, by=0.1)#
+#
+# run simulation#
+out = ode(func=model, y=T0, parms = pars, times =times)#
+#
+# plot results#
+par(mar= c(5,6,2,1))#
+plot(out[,1], out[,2], type='l', xlab='Time', ylab = 'density', ylim = range(out[,2:3]))#
+lines(out[,1], out[,3], col='blue')
+Range kutta#
+dNdt = function(N, lambda) lambda*N#
+#
+# amount of change#
+k1 = dNdt(N0, lambda=1)#
+k2 = dNdt(N0 + 0.5*k1)#
+k3 = dNdt(N0 + 0.5*k2)#
+k4 = dNdt(N0 + k3)#
+delta = (k1 + 2*k2 + 2*k3 + k4)/6#
+#
+N1 = NO + delta#
+#
+library(deSolve)#
+model = function(Time, State, Pars) {#
+	with(as.list(c(State, Pars)), {#
+		dR = r*R*(1-R/k) - a1*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# parameters#
+r=1#
+a=1#
+b=5#
+k=0.6#
+#
+pars = c(r=r, a=a, b=b, K=K)#
+#
+# initial conditions#
+T0 = c(R=1, C=0.1)#
+#
+# simulation consitions#
+times = seq(0, 1000, by=0.1)#
+#
+# run simulation#
+out = ode(func=model, y=T0, parms = pars, times =times)#
+#
+# plot results#
+par(mar= c(5,6,2,1))#
+plot(out[,1], out[,2], type='l', xlab='Time', ylab = 'density', ylim = range(out[,2:3]))#
+lines(out[,1], out[,3], col='blue')
+Range kutta#
+dNdt = function(N, lambda) lambda*N#
+#
+# amount of change#
+k1 = dNdt(N0, lambda=1)#
+k2 = dNdt(N0 + 0.5*k1)#
+k3 = dNdt(N0 + 0.5*k2)#
+k4 = dNdt(N0 + k3)#
+delta = (k1 + 2*k2 + 2*k3 + k4)/6#
+#
+N1 = NO + delta#
+#
+library(deSolve)#
+model = function(Time, State, Pars) {#
+	with(as.list(c(State, Pars)), {#
+		dR = r*R*(1-R/k) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# parameters#
+r=1#
+a=1#
+b=5#
+k=0.6#
+#
+pars = c(r=r, a=a, b=b, K=K)#
+#
+# initial conditions#
+T0 = c(R=1, C=0.1)#
+#
+# simulation consitions#
+times = seq(0, 1000, by=0.1)#
+#
+# run simulation#
+out = ode(func=model, y=T0, parms = pars, times =times)#
+#
+# plot results#
+par(mar= c(5,6,2,1))#
+plot(out[,1], out[,2], type='l', xlab='Time', ylab = 'density', ylim = range(out[,2:3]))#
+lines(out[,1], out[,3], col='blue')
+dNdt = function(N, lambda) lambda*N#
+#
+# amount of change#
+k1 = dNdt(N0, lambda=1)#
+k2 = dNdt(N0 + 0.5*k1)#
+k3 = dNdt(N0 + 0.5*k2)#
+k4 = dNdt(N0 + k3)#
+delta = (k1 + 2*k2 + 2*k3 + k4)/6#
+#
+N1 = NO + delta
+library(deSolve)#
+model = function(Time, State, Pars) {#
+	with(as.list(c(State, Pars)), {#
+		dR = r*R*(1-R/K) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}
+r=1#
+a=1#
+b=5#
+d=0.1#
+K=0.6
+pars = c(r=r, a=a, b=b, K=K)
+T0 = c(R=1, C=0.1)
+times = seq(0, 1000, by=0.1)
+out = ode(func=model, y=T0, parms = pars, times =times)
+par(mar= c(5,6,2,1))
+plot(out[,1], out[,2], type='l', xlab='Time', ylab = 'density', ylim = range(out[,2:3]))
+lines(out[,1], out[,3], col='blue')
+Range kutta on Rosensweig-MacArthur (ex4)#
+#
+library(deSolve)#
+model = function(Time, State, Pars) {#
+	with(as.list(c(State, Pars)), {#
+		dR = r*R*(1-R/K) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# parameters#
+r=1#
+a=1#
+b=5#
+d=0.1#
+K=0.4#
+#
+pars = c(r=r, a=a, b=b, K=K)#
+#
+# initial conditions#
+T0 = c(R=1, C=0.1)#
+#
+# simulation consitions#
+times = seq(0, 1000, by=0.1)#
+#
+# run simulation#
+out = ode(func=model, y=T0, parms = pars, times =times)#
+#
+# plot results#
+par(mar= c(5,6,2,1))#
+plot(out[,1], out[,2], type='l', xlab='Time', ylab = 'density', ylim = range(out[,2:3]))#
+lines(out[,1], out[,3], col='blue')
+Range kutta on Rosensweig-MacArthur (ex4)#
+#
+library(deSolve)#
+model = function(Time, State, Pars) {#
+	with(as.list(c(State, Pars)), {#
+		dR = r*R*(1-R/K) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# parameters#
+r=1#
+a=1#
+b=5#
+d=0.1#
+K=0.8#
+#
+pars = c(r=r, a=a, b=b, K=K)#
+#
+# initial conditions#
+T0 = c(R=1, C=0.1)#
+#
+# simulation consitions#
+times = seq(0, 1000, by=0.1)#
+#
+# run simulation#
+out = ode(func=model, y=T0, parms = pars, times =times)#
+#
+# plot results#
+par(mar= c(5,6,2,1))#
+plot(out[,1], out[,2], type='l', xlab='Time', ylab = 'density', ylim = range(out[,2:3]))#
+lines(out[,1], out[,3], col='blue')
+Range kutta on Rosensweig-MacArthur (ex4)#
+#
+library(deSolve)#
+model = function(Time, State, Pars) {#
+	with(as.list(c(State, Pars)), {#
+		dR = r*R*(1-R/K) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# parameters#
+r=1#
+a=1#
+b=5#
+d=0.1#
+K=0.6#
+#
+pars = c(r=r, a=a, b=b, K=K)#
+#
+# initial conditions#
+T0 = c(R=1, C=0.1)#
+#
+# simulation consitions#
+times = seq(0, 1000, by=0.1)#
+#
+# run simulation#
+out = ode(func=model, y=T0, parms = pars, times =times)#
+#
+# plot results#
+par(mar= c(5,6,2,1))#
+plot(out[,1], out[,2], type='l', xlab='Time', ylab = 'density', ylim = range(out[,2:3]))#
+lines(out[,1], out[,3], col='blue')
+library(rootSolve)
+install.packages("rootSolve")
+library(rootSolve)#
+model = function(t, y, pars){#
+	with(as.list(c(y, pars)), {#
+		dR = r*R*(1-R/K) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# Parameters#
+pars = c(r=1, K=0.7, a=1, b=5, d=0.1)#
+#
+# Initial conditions#
+T0 = c(R = 0.1, C=1.1)#
+#
+# solve the model#
+eq = stode(y=T0, func=model, parms=pars, pos=TRUE)
+eq
+J= jacobian.full(y=eq, func = model, parms= pars)
+eq
+J= jacobian.full(y=eq$y, func = model, parms= pars)
+eigen(J)$values
+Ks = seq(0.5, 1, 0.01)
+Steady state solution#
+#------------------------#
+library(rootSolve)#
+model = function(t, y, pars){#
+	with(as.list(c(y, pars)), {#
+		dR = r*R*(1-R/K) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# Parameters#
+pars = c(r=1, K=0.7, a=1, b=5, d=0.1)#
+#
+# Initial conditions#
+T0 = c(R = 0.1, C=1.1)#
+#
+# solve the model#
+eq = stode(y=T0, func=model, parms=pars, pos=TRUE)#
+#
+# jacobian#
+J= jacobian.full(y=eq$y, func = model, parms= pars)#
+eigen(J)$values#
+#
+# vecteur of K values#
+Ks = seq(0.5, 1, 0.01)#
+#
+# calculate eigen value for each k#
+res = numeric(length(Ks))#
+for (i in 1:length(Ks)){#
+	pars = c(r=1, K=Ks[i], a=1, b=5, d=0.1)#
+	eq = stode(y=eq$y, func = model, parms=pars, pos=TRUE)[[1]]#
+	J = jacobian.full(y=eq$y, func=model, parms=pars)#
+	res[i] = max(as.real(eigen(J)$values))#
+}#
+#
+# graphs#
+par (mar = c(5,6,2,1), mfcol=c(1,3))#
+plot(Ks, res, type="l", xlab="K", ylab="max eig value")#
+abline(h=0, lty=3)#
+#
+# analytical criteria#
+a=1#
+b=5#
+d=0.1#
+abline(v = (1+b*d)/(a*b*(1-d*b)), lty=3, col="red")
+library(rootSolve)#
+model = function(t, y, pars){#
+	with(as.list(c(y, pars)), {#
+		dR = r*R*(1-R/K) - a*R*C/(1+b*R)#
+		dC = a*R*C/(1+b*R) - d*C#
+		list(c(dR, dC))#
+	})#
+}#
+#
+# Parameters#
+pars = c(r=1, K=0.7, a=1, b=5, d=0.1)#
+#
+# Initial conditions#
+T0 = c(R = 0.1, C=1.1)#
+#
+# solve the model#
+eq = stode(y=T0, func=model, parms=pars, pos=TRUE)#
+#
+# jacobian#
+J= jacobian.full(y=eq$y, func = model, parms= pars)#
+eigen(J)$values#
+#
+# vecteur of K values#
+Ks = seq(0.5, 1, 0.01)
+eq
+eq$y
+res = numeric(length(Ks))#
+for (i in 1:length(Ks)){#
+	pars = c(r=1, K=Ks[i], a=1, b=5, d=0.1)#
+	eq = stode(y=eq$y, func = model, parms=pars, pos=TRUE)#
+	J = jacobian.full(y=eq$y, func=model, parms=pars)#
+	res[i] = max(as.real(eigen(J)$values))#
+}#
+#
+# graphs#
+par (mar = c(5,6,2,1), mfcol=c(1,3))#
+plot(Ks, res, type="l", xlab="K", ylab="max eig value")#
+abline(h=0, lty=3)#
+#
+# analytical criteria#
+a=1#
+b=5#
+d=0.1#
+abline(v = (1+b*d)/(a*b*(1-d*b)), lty=3, col="red")
+calculate eigen value for each k#
+res = numeric(length(Ks))#
+for (i in 1:length(Ks)){#
+	pars = c(r=1, K=Ks[i], a=1, b=5, d=0.1)#
+	eq = stode(y=eq$y, func = model, parms=pars, pos=TRUE)#
+	J = jacobian.full(y=eq$y, func=model, parms=pars)#
+	res[i] = max(eigen(J)$values)#
+}#
+#
+# graphs#
+par (mar = c(5,6,2,1), mfcol=c(1,3))#
+plot(Ks, res, type="l", xlab="K", ylab="max eig value")#
+abline(h=0, lty=3)#
+#
+# analytical criteria#
+a=1#
+b=5#
+d=0.1#
+abline(v = (1+b*d)/(a*b*(1-d*b)), lty=3, col="red")
+?as.real
+??real
+as.real
+calculate eigen value for each k#
+res = numeric(length(Ks))#
+for (i in 1:length(Ks)){#
+	pars = c(r=1, K=Ks[i], a=1, b=5, d=0.1)#
+	eq = stode(y=eq$y, func = model, parms=pars, pos=TRUE)#
+	J = jacobian.full(y=eq$y, func=model, parms=pars)#
+	res[i] = max(Re(eigen(J)$values))#
+}#
+#
+# graphs#
+par (mar = c(5,6,2,1), mfcol=c(1,3))#
+plot(Ks, res, type="l", xlab="K", ylab="max eig value")#
+abline(h=0, lty=3)#
+#
+# analytical criteria#
+a=1#
+b=5#
+d=0.1#
+abline(v = (1+b*d)/(a*b*(1-d*b)), lty=3, col="red")
+library(ecolMod)
+install.packages("ecolMod")
+library(ecolMod)
+demo(chap6)
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2))#
+#
+     list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }
+model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+#
+     list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }
+times     <-seq(0,300,0.5)
+out <-as.data.frame(ode(state,times,model,parameters))
+model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+#
+     list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))
+plot (times,out$D,type="l",main="[D]",xlab="time",ylab="density")
+plot (times,out$P1,type="l",main="[D]",xlab="time, hours",ylab="mol/m3")
+par(ask=FALSE)
+plot (times,out$P1,type="l",main="[D]",xlab="time, hours",ylab="mol/m3")
+mtext(outer=TRUE,side=3,"mtext",cex=1.5)
+plot (times,out$P1,type="l",main="",xlab="time",ylab="density")
+mtext(outer=TRUE,side=3,"mtext",cex=1.5)
+lines (times, out$P2, col="red")
+lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0.1)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- ifelse(t>18, c2*a*P3*f3*(X1 + X2) - m*P3, 0.1)#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+#
+ par(mfrow=c(2,2), oma=c(0,0,3,0))   # set number of plots (mfrow) and margin size (oma)#
+#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0.1)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	if (t>18) dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+#
+ par(mfrow=c(2,2), oma=c(0,0,3,0))   # set number of plots (mfrow) and margin size (oma)#
+#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t=18) P3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+#
+ par(mfrow=c(2,2), oma=c(0,0,3,0))   # set number of plots (mfrow) and margin size (oma)#
+#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t==18) P3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+#
+ par(mfrow=c(2,2), oma=c(0,0,3,0))   # set number of plots (mfrow) and margin size (oma)#
+#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t==18) P3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t==18) dP3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+p00 = function(colo, extinc) (1-extinc)^2p01 = function(colo, extinc) 2*extinc*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*extinc*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, by.row=T)return(PP)}
+MC.trans(0.2, 0.1)
+MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}MC.trans(0.2, 0.1)
+markov = MC.trans(0.2, 0.1)
+apply(markov, 1, sum)
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*extinc*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*extinc*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)apply(markov, 1, sum)
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*extinc*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*colo*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)
+apply(markov, 1, sum)
+eigen(t(markov))
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*extinc*(1-extinc)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*colo*(1-colo)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)apply(markov, 1, sum)
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*colo*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*extinc*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)apply(markov, 1, sum)
+eigen(t(markov))$vectors
+eigen(t(markov))
+eigen(t(markov))[,1]/sum(eigen(t(markov))[,1])
+eigen(t(markov))[,1]
+eigen(t(markov))[[1]][,1]
+eigen(t(markov))$vectors[,1]/sum(eigen(t(markov))[,1])
+eigen(t(markov))$vectors[,1]
+eigen(t(markov))$vectors[,1]/sum(eigen(t(markov))$vectors[,1])
+markov = MC.trans(0.3, 0.1)#testapply(markov, 1, sum)#valeurs a equilibre TRANSPOSER POUR VALP A GAUCHEeigen(t(markov))#2eme valp -> vitesse de convergence #1er vectp -> valeur a equilibre IL FAUT NORMALISER !!eigen(t(markov))$vectors[,1]/sum(eigen(t(markov))$vectors[,1])
+5/6
+15/60
+10/25
+cd /Library/Frameworks/R.framework/Resources/share/texmf/tex32/136
+32/136
+q()
+sfInit(parallel=TRUE,cpus=2)
+install.packages("snowfall")
+library(rjaps)
+library(rjags)
+q()
+SDM = multinom(t1 ~ E + I(E^2) + P + I(P^2), data)
+setwd('/Users/isabelle/Documents/RESEARCH/ANALYSES/2014_veget_herbi_dyn/exploSteveModel/scripts')
+library(nnet)# Load datadata = as.data.frame(read.table("../data/data_categorical.txt"))data$E = data$av_annual_mean_tpdata$P = data$av_annual_pp# Run the modelSDM = multinom(t1 ~ E + I(E^2) + P + I(P^2), data)
+pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")
+head(pred_real)
+pred_gradient = pred_real
+Plot the resultscolo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"
+newdat = cbind(data$E, data$P)
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"
+newdat = data.frame(data$E, data$P)
+colo = c("darkgreen", "lightgreen", "orange", "blue")
+env_var = newdat$E ; leg = "Température moyenne annuelle"
+Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+env_var
+newdat = data.frame(E=data$E, P=data$P)
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"
+Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+Clean data                     ##########################################################################dat = read.table("../data/data_BA.txt",header = TRUE, sep = ";")## Rm all disturbed plotsdat  <- dat[is.na(dat$disturbance),]# BRP = brulis partiel# CAM = coupe d'amélioration# CB = coupe par bandes# CD = coupes en damier# CDL = coupe à diamètre limité# CE = coupe partielle et épidémie légère# CHP = chablis partiel# CJ = coupe de jardinage# CP = coupe partielle# DLD = Coupe à diamètre limite avec dégagement des arbres d'avenir# DP  = Dépérissement partiel du feuillu# EL = Épidémie légère# EPC = Éclaircie précommerciale# VEP = Verglas partiel## Order plotdat  <- dat[order(dat$id_plot,dat$yr),]## Rm all NA in cover type (R,M,F)dat  <- dat[complete.cases(dat$cover_type),]## Rm all plots with no climatic data associateddat  <- dat[which(!is.na(dat$annual_pp)),]## Conserve all plots with drainage 20,30,40dat$drainage  <- as.numeric(dat$drainage)test  = numeric(nrow(dat))test[dat$drainage >= 20 & dat$drainage <= 41] = 1dat = dat[test==1,]### Get BA in hectaresdat[,7:62] <- dat[,7:62]*10000/400## Rm plots with only one measurementN  <- rowSums(table(dat$id_plot,dat$id_mes))N  <- names(N[N==1])dat  <- dat[!dat$id_plot %in% N,]########################################################################                  Classify plots                       ########################################################################### List of interests speciesT_sp  <- c("boj","bop","chr","peb","peg","pet","pib","pir","prp","sal","soa")C_sp  <- c("epn","epb","epr","mel","pig","sab") #rm tho & pruD_sp  <- c("err","ers","fra","frn","heg","osv","til","cet")# Subset species BA and cover type observedclass_dat  <- dat[,c(7:62,65)]class_dat$sum_tot <- rowSums(dat[,7:62],na.rm=TRUE) class_dat$T_prop  <- rowSums(dat[which(names(dat) %in% T_sp)],na.rm=T)/class_dat$sum_totclass_dat$C_prop  <- rowSums(dat[which(names(dat) %in% C_sp)],na.rm=T)/class_dat$sum_totclass_dat$D_prop  <- rowSums(dat[which(names(dat) %in% D_sp)],na.rm=T)/class_dat$sum_tot# Subset proportion by species classclass_dat  <- class_dat[,57:61]# Class into state typesclass_fn = function(x) {   classPlot  <- NULL  if(min(complete.cases(x))==1) {  if(sum(x[1:3]) < 1/3) {classPlot="Unclass"} 	  else if(x[1] > 2/3) {classPlot="T"}  else if(x[2] > 2/3) {classPlot="C"}  else if(x[3] > 2/3) {classPlot="D"}  else {classPlot="M"}  } else {classPlot="Unclass"}return(classPlot)}class_final  <- as.vector(apply(class_dat[,3:5],1,class_fn))# Rename columnsclass_dat  <- cbind(class_dat,class_final)names(class_dat)[c(1,6)]  <- c("obs","pred")# Format factors levelsclass_dat$obs  <- as.factor(class_dat$obs) class_dat$obs  <- factor(class_dat$obs,levels=c(levels(class_dat$obs)[3],levels(class_dat$obs)[1],levels(class_dat$obs)[2],"T","Unclass"),labels=c("C","D","M","T","Unclass"))########################################################################               Reshape and export data                 ############################################################################ Function to match remeasurements on the same line prwise  <- function(x,clim=FALSE){#
+  if (clim == FALSE){    if (class(x)=='numeric') df  <-  data.frame(col1=numeric(length(x)-1),col2=numeric(length(x)-1))    if (class(x)=='character') df  <-  data.frame(col1=character(length(x)-1),col2=character(length(x)-1),stringsAsFactors=FALSE)    colnames(df)  <- c("t0","t1")    for(i in 1:dim(df)[1]){      df[i,1]  <-  x[i]      df[i,2]  <- x[i+1]    }  }#
+  if (clim == TRUE){    df  <- numeric(length(x)-1)    for(i in 2:length(x)){      df[i-1]  <-  mean(c(x[i-1],x[i]))    }  }  return(df)}# Subset only columns needed and remove unclass plotsres_dat  <- cbind(dat[,c(2:4,68:71)],pred_class=class_dat$pred)res_dat$pred_class  <- as.character(res_dat$pred_class,stringsAsFactors=FALSE)## Split by id_plotres_dat  <- split(res_dat,res_dat$id_plot)## Pairpair <- function(x) { res  <- cbind(id_plot=x[-1,1],                                av_annual_pp=prwise(x[,4],clim=TRUE),                                av_annual_mean_tp=prwise(x[,5],clim=TRUE),                                av_annual_min_tp=prwise(x[,6],clim=TRUE),                                av_annual_max_tp=prwise(x[,7],clim=TRUE),                                int=diff(x[,2]),                                prwise(x[,8],clim=FALSE))                      return(res)                     }## Transpose states and compute meanreshape_dat <- lapply(res_dat,pair)## Final reshaping and exportreshape_dat  <- do.call(rbind,reshape_dat)reshape_dat  <- data.frame(reshape_dat,row.names=NULL)table(reshape_dat$t0)reshape_dat = reshape_dat[reshape_dat$t0 != "Unclass" & reshape_dat$t1 != "Unclass",]write.table(reshape_dat,file="../data/data_categorical_sansTHOPRU.txt")
+library(nnet)# Load datadata = as.data.frame(read.table("../data/data_categorical_sansTHOPRU.txt"))data$E = data$av_annual_mean_tpdata$P = data$av_annual_pp# Run the modelSDM = multinom(t1 ~ E + I(E^2) + P + I(P^2), data)# Get predictionspred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")newdat = expand.grid(E=seq(-1.7,7,0.01),P=seq(700, 1600, 1) )pred_gradient = predict(SDM,new=data.frame(newdat),"probs")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"
+Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+SDM = multinom(t1 ~ E + I(E^2) + I(E^3) + P + I(P^2), data)# Get predictionspred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")newdat = expand.grid(E=seq(-1.7,7,0.01),P=seq(700, 1600, 1) )pred_gradient = predict(SDM,new=data.frame(newdat),"probs")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"
+Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+Run the modelSDM = multinom(t1 ~ E + I(E^2) + P + I(P^2), data)# Get predictionspred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")newdat = expand.grid(E=seq(-1.7,7,0.01),P=seq(700, 1600, 1) )pred_gradient = predict(SDM,new=data.frame(newdat),"probs")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+library(randomForest)
+install.packages("randomForest")
+?randomForest
+??randomForest
+SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])
+library(randomForest)
+set.seed(23)
+SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])
+SDM
+pred_gradient = predict(SDM,new=data.frame(newdat),"probs")
+pred_gradient = predict(SDM,new=data.frame(newdat),"response")
+pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+head(pred_gradient)
+summary(pred_gradient)
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+library(nnet)# Load datadata = as.data.frame(read.table("../data/data_categorical_sansTHOPRU.txt"))data$E = data$av_annual_mean_tpdata$P = data$av_annual_pp
+library(randomForest)set.seed(23)SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])
+newdat = expand.grid(E=seq(-1.7,7,0.01),P=seq(700, 1600, 1) )
+set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+newdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )
+set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+library(nnet)# Load datadata = as.data.frame(read.table("../data/data_categorical.txt"))data$E = data$av_annual_mean_tpdata$P = data$av_annual_pp
+Run the model#SDM = multinom(t1 ~ E + I(E^2) + P + I(P^2), data)library(randomForest)set.seed(23)SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])# Get predictionspred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")newdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )#pred_gradient = predict(SDM,new=data.frame(newdat),"probs")set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")newdat = expand.grid(E=seq(-1.7,10,0.1),P=seq(700, 1600, 10) )#pred_gradient = predict(SDM,new=data.frame(newdat),"probs")set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"C"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"D"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 3.2,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("C","D","M","T"),lty=1)
+Clean data                     ##########################################################################dat = read.table("../data/data_BA.txt",header = TRUE, sep = ";")## Rm all disturbed plotsdat  <- dat[is.na(dat$disturbance),]# BRP = brulis partiel# CAM = coupe d'amélioration# CB = coupe par bandes# CD = coupes en damier# CDL = coupe à diamètre limité# CE = coupe partielle et épidémie légère# CHP = chablis partiel# CJ = coupe de jardinage# CP = coupe partielle# DLD = Coupe à diamètre limite avec dégagement des arbres d'avenir# DP  = Dépérissement partiel du feuillu# EL = Épidémie légère# EPC = Éclaircie précommerciale# VEP = Verglas partiel## Order plotdat  <- dat[order(dat$id_plot,dat$yr),]## Rm all NA in cover type (R,M,F)dat  <- dat[complete.cases(dat$cover_type),]## Rm all plots with no climatic data associateddat  <- dat[which(!is.na(dat$annual_pp)),]## Conserve all plots with drainage 20,30,40dat$drainage  <- as.numeric(dat$drainage)test  = numeric(nrow(dat))test[dat$drainage >= 20 & dat$drainage <= 41] = 1dat = dat[test==1,]### Get BA in hectaresdat[,7:62] <- dat[,7:62]*10000/400## Rm plots with only one measurementN  <- rowSums(table(dat$id_plot,dat$id_mes))N  <- names(N[N==1])dat  <- dat[!dat$id_plot %in% N,]
+R_sp  <- c("boj","bop","chr","peb","peg","pet","pib","pir","prp","sal","soa")B_sp  <- c("epn","epb","epr", "tho", "mel","pig","sab") T_sp  <- c("err","ers","fra","frn","heg","osv","til","cet", "pru")# Subset species BA and cover type observedclass_dat  <- dat[,c(7:62,65)]class_dat$sum_tot <- rowSums(dat[,7:62],na.rm=TRUE)
+class_dat$R_prop  <- rowSums(dat[which(names(dat) %in% R_sp)],na.rm=T)/class_dat$sum_totclass_dat$B_prop  <- rowSums(dat[which(names(dat) %in% B_sp)],na.rm=T)/class_dat$sum_totclass_dat$T_prop  <- rowSums(dat[which(names(dat) %in% T_sp)],na.rm=T)/class_dat$sum_tot# Subset proportion by species classclass_dat  <- class_dat[,57:61]
+class_fn = function(x) {   classPlot  <- NULL  if(min(complete.cases(x))==1) {  if(sum(x[1:3]) < 1/3) {classPlot="Unclass"} 	  else if(x[1] > 2/3) {classPlot="R"}  else if(x[2] > 2/3) {classPlot="B"}  else if(x[3] > 2/3) {classPlot="T"}  else {classPlot="M"}  } else {classPlot="Unclass"}return(classPlot)}class_final  <- as.vector(apply(class_dat[,3:5],1,class_fn))
+Rename columnsclass_dat  <- cbind(class_dat,class_final)names(class_dat)[c(1,6)]  <- c("obs","pred")# Format factors levelsclass_dat$obs  <- as.factor(class_dat$obs) class_dat$obs  <- factor(class_dat$obs,levels=c(levels(class_dat$obs)[3],levels(class_dat$obs)[1],levels(class_dat$obs)[2],"R","Unclass"),labels=c("B","T","M","R","Unclass"))
+Function to match remeasurements on the same line prwise  <- function(x,clim=FALSE){#
+  if (clim == FALSE){    if (class(x)=='numeric') df  <-  data.frame(col1=numeric(length(x)-1),col2=numeric(length(x)-1))    if (class(x)=='character') df  <-  data.frame(col1=character(length(x)-1),col2=character(length(x)-1),stringsAsFactors=FALSE)    colnames(df)  <- c("t0","t1")    for(i in 1:dim(df)[1]){      df[i,1]  <-  x[i]      df[i,2]  <- x[i+1]    }  }#
+  if (clim == TRUE){    df  <- numeric(length(x)-1)    for(i in 2:length(x)){      df[i-1]  <-  mean(c(x[i-1],x[i]))    }  }  return(df)}# Subset only columns needed and remove unclass plots
+res_dat  <- cbind(dat[,c(2:4,68:71)],pred_class=class_dat$pred)res_dat$pred_class  <- as.character(res_dat$pred_class,stringsAsFactors=FALSE)## Split by id_plotres_dat  <- split(res_dat,res_dat$id_plot)
+pair <- function(x) { res  <- cbind(id_plot=x[-1,1],                                av_annual_pp=prwise(x[,4],clim=TRUE),                                av_annual_mean_tp=prwise(x[,5],clim=TRUE),                                av_annual_min_tp=prwise(x[,6],clim=TRUE),                                av_annual_max_tp=prwise(x[,7],clim=TRUE),                                int=diff(x[,2]),                                prwise(x[,8],clim=FALSE))                      return(res)                     }## Transpose states and compute meanreshape_dat <- lapply(res_dat,pair)## Final reshaping and exportreshape_dat  <- do.call(rbind,reshape_dat)reshape_dat  <- data.frame(reshape_dat,row.names=NULL)table(reshape_dat$t0)reshape_dat = reshape_dat[reshape_dat$t0 != "Unclass" & reshape_dat$t1 != "Unclass",]
+write.table(reshape_dat,file="../data/data_categorical_RBTM.txt")
+library(nnet)# Load datadata = as.data.frame(read.table("../data/data_categorical_RBTM.txt"))data$E = data$av_annual_mean_tpdata$P = data$av_annual_pp# Run the model#SDM = multinom(t1 ~ E + I(E^2) + P + I(P^2), data)library(randomForest)set.seed(23)SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])
+SDM = multinom(t1 ~ E + I(E^2) + P + I(P^2), data)
+newdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )
+pred_gradient = predict(SDM,new=data.frame(newdat),"probs")
+Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)
+pred_gradient
+head(pred_gradient)
+env_var = newdat$E ; leg = "Température moyenne annuelle"
+Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)
+Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)
+par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)
+legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+SDM = multinom(t1 ~ E + I(E^2) + I(E^3) + P + I(P^2) + I(P^3), data)
+newdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )pred_gradient = predict(SDM,new=data.frame(newdat),"probs")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+library(nnet)# Load datadata = as.data.frame(read.table("../data/data_categorical_RBTM.txt"))data$E = data$av_annual_mean_tpdata$P = data$av_annual_pp# Run the model#SDM = multinom(t1 ~ E + I(E^2) + I(E^3) + P + I(P^2) + I(P^3), data)library(randomForest)set.seed(23)SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])
+newdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )#pred_gradient = predict(SDM,new=data.frame(newdat),"probs")set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+set.seed(23)pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"prob")
+write.table(pred_real,"../data/data_pred_states_RBTM.txt")write.table(cbind(newdat,pred_gradient),"../data/data_pred_gradient_RBTM.txt")
+dev.copy2pdf(file = "../figures/SDM_temp_RBTM.pdf")
+env_var = newdat$P ; leg = "Précipitations moyennes annuelles"
+Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+dev.copy2pdf(file = "../figures/SDM_precip_RBTM.pdf")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), mean)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), mean)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), mean)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), mean)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+data$E = data$av_annual_min_tpdata$P = data$av_annual_pp# Run the model#SDM = multinom(t1 ~ E + I(E^2) + I(E^3) + P + I(P^2) + I(P^3), data)library(randomForest)set.seed(23)SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])# Get predictionsnewdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )#pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")#pred_gradient = predict(SDM,new=data.frame(newdat),"probs")set.seed(23)pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"prob")set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), mean)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), mean)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), mean)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), mean)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+library(nnet)# Load datadata = as.data.frame(read.table("../data/data_categorical_RBTM.txt"))data$E = data$av_annual_max_tpdata$P = data$av_annual_pp# Run the model#SDM = multinom(t1 ~ E + I(E^2) + I(E^3) + P + I(P^2) + I(P^3), data)library(randomForest)set.seed(23)SDM = randomForest(t1 ~ . , data = data[, c("t1", "E", "P")])# Get predictionsnewdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )#pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")#pred_gradient = predict(SDM,new=data.frame(newdat),"probs")set.seed(23)pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"prob")set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+summary(data)
+newdat = expand.grid(E=seq(3,12,0.1),P=seq(700, 1600, 10) )#pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"probs")#pred_gradient = predict(SDM,new=data.frame(newdat),"probs")set.seed(23)pred_real = predict(SDM,new=data.frame(E=data$E, P=data$P),"prob")set.seed(23)pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
+SDM = multinom(t1 ~ E + I(E^2) + I(E^3) + P + I(P^2) + I(P^3), data)
+newdat = expand.grid(E=seq(3,12,0.1),P=seq(700, 1600, 10) )
+pred_gradient = predict(SDM,new=data.frame(newdat),"probs")
+colo = c("darkgreen", "lightgreen", "orange", "blue")env_var = newdat$E ; leg = "Température moyenne annuelle"#env_var = newdat$P ; leg = "Précipitations moyennes annuelles"Cmax = lapply(split(pred_gradient[,"B"], as.factor(env_var)), max)Dmax = lapply(split(pred_gradient[,"T"], as.factor(env_var)), max)Mmax= lapply(split(pred_gradient[,"M"], as.factor(env_var)), max)Tmax = lapply(split(pred_gradient[,"R"], as.factor(env_var)), max)pred_gradient_max = cbind(Cmax, Dmax, Mmax, Tmax)par(mar=c(5,5,2,1))xscale = as.numeric(rownames(pred_gradient_max))plot(xscale,pred_gradient_max[,1],type = "l",ylim=c(0,1),cex.axis = 1.25, cex.lab = 1.25, xlab = leg, ylab = "Proportion",lwd = 2, col=colo[1])lines(xscale,pred_gradient_max[,2],col = colo[2],lwd = 2)lines(xscale,pred_gradient_max[,3],col = colo[3],lwd = 2)lines(xscale,pred_gradient_max[,4],col = colo[4],lwd = 2)abline(v = 7,lty = 3)legend("topright",bty = "n", col = colo,legend = c("B","T","M","R"),lty=1)
