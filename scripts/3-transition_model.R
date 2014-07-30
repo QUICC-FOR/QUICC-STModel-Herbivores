@@ -35,6 +35,43 @@ Ha, Hv # herbivore densities at t0
     thetat = exp(logit_thetat)/(1+exp(logit_thetat))
     eps = exp(logit_eps)/(1+exp(logit_eps))
 
+    par_h = herbivory(alphat, alphab, betat, betab, thetat, thetab, ET, EB,EM, Hv, Ha)
+    
+	# Compute the likelihood of observations
+	lik[t0 == "B" & t1 == "M"] = (par_h$betat_h*(ET+EM))[t0 == "B" & t1 == "M"] 
+	lik[t0 == "B" & t1 == "R"] = eps[t0 == "B" & t1 == "R"] 	
+	lik[t0 == "B" & t1 == "B"] = (1 - eps - par_h$betat_h*(ET+EM))[t0 == "B" & t1 == "B"]
+
+	lik[t0 == "T" & t1 == "T"] = (1 - eps - par_h$betab_h*(EB+EM))[t0 == "T" & t1 == "T"] 	
+	lik[t0 == "T" & t1 == "M"] = (par_h$betab_h*(ET+EM))[t0 == "T" & t1 == "M"] 			
+	lik[t0 == "T" & t1 == "R"] = eps[t0 == "T" & t1 == "R"] 		
+	
+	lik[t0 == "M" & t1 == "B"] = par_h$thetab_h[t0 == "M" & t1 == "B"]	
+	lik[t0 == "M" & t1 == "T"] = par_h$thetat_h[t0 == "M" & t1 == "T"] 	
+	lik[t0 == "M" & t1 == "M"] = (1 - eps - par_h$thetab_h - par_h$thetat_h)[t0 == "M" & t1 == "M"] 			
+	lik[t0 == "M" & t1 == "R"] = eps[t0 == "M" & t1 == "R"] 
+	
+	phib = par_h$alphab_h*(EM + EB)*(1-par_h$alphat_h*(ET+EM))
+	phit = par_h$alphat_h*(EM + ET)*(1-par_h$alphab_h*(EB+EM))
+	phim = par_h$alphab_h*(EM + EB)*par_h$alphat_h*(EM + ET)
+	lik[t0 == "R" & t1 == "B"] = phib[t0 == "R" & t1 == "B"] 	
+	lik[t0 == "R" & t1 == "T"] = phit[t0 == "R" & t1 == "T"]	
+	lik[t0 == "R" & t1 == "M"] = phim[t0 == "R" & t1 == "M"] 			
+	lik[t0 == "R" & t1 == "R"] = (1 - phib - phit - phim)[t0 == "R" & t1 == "R"] 
+
+	if(sum(lik==0)>0) cat("lik=0\n")
+    
+	return(lik)
+}
+
+#-----------------------------------------------------------------------------
+
+PDF = function(t1,lik) log(lik)
+
+#-----------------------------------------------------------------------------
+
+    herbivory <- function(alphat, alphab, betat, betab,thetat, thetab, ET, EB, EM, Hv, Ha)
+    {
 	#params fixes
 	k0 = 0.5
 
@@ -78,27 +115,23 @@ Ha, Hv # herbivore densities at t0
     # herbivores competition
 	k = exp(-log(1/k0)*Hv/Ha)
 	
-	
 	# neighborgh t0
-	R = 1-ET -EB-EM
-	TT = ET
-	B = EB
-	M = EM
-
+	ER = 1-ET -EB-EM
+	
 		
 	# moose and B
-	ma_B = mas/(1+(mas/ma0-1)*B)
+	ma_B = mas/(1+(mas/ma0-1)*EB)
 	
 	# intakes
-    Fa = u*k*R/Ha
-    Ga = k*(v*TT+w*B+x*M)/Ha
+    Fa = u*k*ER/Ha
+    Ga = k*(v*ET+w*EB+x*EM)/Ha
     Fa[is.nan(Fa)] = 0
     Ga[is.nan(Ga)] = 0
     Fa[is.infinite(Fa)] = 0
     Ga[is.infinite(Ga)] = 0
     
-    Fv = u*(1-k)*R/Hv
-    Gv = (1-k)*(v*TT+w*B+x*M)/Hv
+    Fv = u*(1-k)*ER/Hv
+    Gv = (1-k)*(v*ET+w*EB+x*EM)/Hv
     Fv[is.nan(Fv)] = 0
     Gv[is.nan(Gv)] = 0
     Fv[is.infinite(Fv)] = 0
@@ -111,32 +144,32 @@ Ha, Hv # herbivore densities at t0
         
     # herbivore pressure
         
-    PRB = (Ha*Ia1*kappaba + Hv*Iv1*kappabv)/(u*R)
-    PRT = (Ha*Ia1*kappaba + Hv*Iv1*kappabv)/(u*R)
+    PRB = (Ha*Ia1*kappaba + Hv*Iv1*kappabv)/(u*ER)
+    PRT = (Ha*Ia1*kappaba + Hv*Iv1*kappabv)/(u*ER)
     PRB[is.nan(PRB)] = 0
     PRT[is.nan(PRT)] = 0
     PRB[is.infinite(PRB)] = 0
     PRT[is.infinite(PRT)] = 0
 
         
-    sumOHa = omegatHa * T + omegabHa * B + (1-omegatHa-omegabHa) * M
-    OtHa = omegatHa*T /sumOHa
-    ObHa = omegabHa*B /sumOHa
-    OmHa = (1-omegatHa-omegabHa)*M /sumOHa
+    sumOHa = omegatHa * ET + omegabHa * EB + (1-omegatHa-omegabHa) * EM
+    OtHa = omegatHa*ET /sumOHa
+    ObHa = omegabHa*EB /sumOHa
+    OmHa = (1-omegatHa-omegabHa)*EM /sumOHa
 
-    sumOHv = omegatHv * T + omegabHv * B + (1-omegatHv-omegabHv) * M
-    OtHv = omegatHv*T /sumOHv
-    ObHv = omegabHv*B /sumOHv
-    OmHv = (1-omegatHv-omegabHv)*M /sumOHv
+    sumOHv = omegatHv * ET + omegabHv * EB + (1-omegatHv-omegabHv) * EM
+    OtHv = omegatHv*ET /sumOHv
+    ObHv = omegabHv*EB /sumOHv
+    OmHv = (1-omegatHv-omegabHv)*EM /sumOHv
     
-    PTB = (OtHa*Ha*Ia2*kappaba + OtHv*Hv*Iv2*kappabv)/(v*TT)
-    PTT = (OtHa*Ha*Ia2*kappata + OtHv*Hv*Iv2*kappatv)/(v*TT)
+    PTB = (OtHa*Ha*Ia2*kappaba + OtHv*Hv*Iv2*kappabv)/(v*ET)
+    PTT = (OtHa*Ha*Ia2*kappata + OtHv*Hv*Iv2*kappatv)/(v*ET)
 
-    PBB = (ObHa*Ha*Ia2*kappaba + ObHv*Hv*Ia2*kappabv)/(w*B) 
-    PBT = (ObHa*Ha*Ia2*kappata + ObHv*Hv*Ia2*kappatv)/(w*B) 
+    PBB = (ObHa*Ha*Ia2*kappaba + ObHv*Hv*Ia2*kappabv)/(w*EB) 
+    PBT = (ObHa*Ha*Ia2*kappata + ObHv*Hv*Ia2*kappatv)/(w*EB) 
 
-    PMB = (OmHa*Ha*Ia2*kappaba + OmHv*Hv*Iv2*kappabv)/(x*M) 
-    PMT = (OmHa*Ha*Ia2*kappata + OmHv*Hv*Iv2*kappatv)/(x*M) 
+    PMB = (OmHa*Ha*Ia2*kappaba + OmHv*Hv*Iv2*kappabv)/(x*EM) 
+    PMT = (OmHa*Ha*Ia2*kappata + OmHv*Hv*Iv2*kappatv)/(x*EM) 
 
     PTB[is.nan(PTB)] = 0
     PTT[is.nan(PTT)] = 0
@@ -164,38 +197,8 @@ Ha, Hv # herbivore densities at t0
     betab_h = (1/2)*(1 + betab * cos(pi*PTB) + (1-betab)*cos(pi*(1+PTT)) ) 
     betat_h = (1/2)*(1 + betat * cos(pi*PBT) + (1-betat)*cos(pi*(1+PBB)) )
 
-    
-	# Compute the likelihood of observations
-	lik[t0 == "B" & t1 == "M"] = (betat_h*(ET+EM))[t0 == "B" & t1 == "M"] 
-	lik[t0 == "B" & t1 == "R"] = eps[t0 == "B" & t1 == "R"] 	
-	lik[t0 == "B" & t1 == "B"] = (1 - eps - betat_h*(ET+EM))[t0 == "B" & t1 == "B"]
-
-	lik[t0 == "TT" & t1 == "TT"] = (1 - eps - betab_h*(EB+EM))[t0 == "TT" & t1 == "TT"] 	
-	lik[t0 == "TT" & t1 == "M"] = (betab_h*(ET+EM))[t0 == "TT" & t1 == "M"] 			
-	lik[t0 == "TT" & t1 == "R"] = eps[t0 == "TT" & t1 == "R"] 		
-	
-	lik[t0 == "M" & t1 == "B"] = thetab_h[t0 == "M" & t1 == "B"]	
-	lik[t0 == "M" & t1 == "TT"] = thetat_h[t0 == "M" & t1 == "TT"] 	
-	lik[t0 == "M" & t1 == "M"] = (1 - eps - thetab_h - thetat_h)[t0 == "M" & t1 == "M"] 			
-	lik[t0 == "M" & t1 == "R"] = eps[t0 == "M" & t1 == "R"] 
-	
-	lik[t0 == "R" & t1 == "B"] = (alphab_h*(EM + EB)*(1-alphat_h*(ET+EM)))[t0 == "R" & t1 == "B"] 	
-	lik[t0 == "R" & t1 == "TT"] = (alphat*(EM + ET)*(1-alphab*(EB+EM)))[t0 == "R" & t1 == "TT"]	
-	lik[t0 == "R" & t1 == "M"] = (alphab_h*(EM + EB)*alphat*(EM + ET))[t0 == "R" & t1 == "M"] 			
-	
-	phib = alphab_h*(EM + EB)*(1-alphat_h*(ET+EM))
-	phit = alphat*(EM + ET)*(1-alphab*(EB+EM))
-	phim = alphab_h*(EM + EB)*alphat*(EM + ET)
-	lik[t0 == "R" & t1 == "R"] = (1 - phib - phit - phim)[t0 == "R" & t1 == "R"] 
-
-#	lik[lik==0] = NA
-#	
-#    print(lik)
-	return(lik)
-}
-
-PDF = function(t1,lik) log(lik+1)
-
+    return(list(alphat_h=alphat_h, alphab_h=alphab_h,betat_h=betat_h, betab_h=betab_h, thetat_h=thetat_h, thetab_h=thetab_h))
+    }
 
 
 

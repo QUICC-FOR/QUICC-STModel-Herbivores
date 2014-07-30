@@ -1,7 +1,7 @@
 # state transitions
 data = as.data.frame(read.table("../data/data_reshaped_RBTM_herbivores.txt"))
 # neighborhood
-pred = read.table("../data/data_pred_states_randomForest.txt")
+pred = read.table("../data/data_pred_states_multinom.txt")
 
 # remove transitions D->C and C->D
 test = numeric(nrow(data))
@@ -190,7 +190,7 @@ function(par, data)
     thetat = exp(logit_thetat)/(1+exp(logit_thetat))
     eps = exp(logit_eps)/(1+exp(logit_eps))
 
-        alphab = exp(logit_alphab)/(1+exp(logit_alphab))
+    alphab = exp(logit_alphab)/(1+exp(logit_alphab))
     alphat = exp(logit_alphat)/(1+exp(logit_alphat))
     betab = exp(logit_betab)/(1+exp(logit_betab))
     betat = exp(logit_betat)/(1+exp(logit_betat))
@@ -198,142 +198,16 @@ function(par, data)
     thetat = exp(logit_thetat)/(1+exp(logit_thetat))
     eps = exp(logit_eps)/(1+exp(logit_eps))
 
-	#params fixes
-	k0 = 0.5
 
-    u = 1000 ; v = 500 ;  w= 200 ; x= 300
-    omegatHa = 0.3
-    omegabHa = 0.3
-
-    omegatHv = 0.5
-    omegabHv = 0
-
-    kappata = 0.5
-    kappaba = 0.3
-
-    kappatv = 0.265
-    kappabv = 0.175
-    # moose
-    za = 1
-    ca = 0.7
-    ma0 = 0.05
-    mas = 0.2
-    taua = 17
-    pa = 6
-    mua = taua
-    nua = taua
-    phia = 0.3
-    ra = 5
-
-    #deer
-    zv = 1
-    cv = 0.7
-    mv = 0.2
-    tauv = 8.75
-    pv = 5
-    muv = tauv
-    nuv = tauv
-    phiv = 0.2
-    rv = 5
-
-
-	# impact of the herbivore
-    # herbivores competition
-	k = exp(-log(1/k0)*Hv/Ha)
-	
-	# neighborgh t0
-	R = 1-ET -EB-EM
-	TT = ET
-	B = EB
-	M = EM
-	
-		
-	# moose and B
-	ma_B = mas/(1+(mas/ma0-1)*B)
-	
-	# intakes
-    Fa = u*k*R/Ha
-    Ga = k*(v*TT+w*B+x*M)/Ha
-    Fa[is.nan(Fa)] = 0
-    Ga[is.nan(Ga)] = 0
-    Fa[is.infinite(Fa)] = 0
-    Ga[is.infinite(Ga)] = 0
+    par_h = herbivory(alphat, alphab, betat, betab, thetat, thetab, ET, EB,EM, Hv, Ha)
     
-    Fv = u*(1-k)*R/Hv
-    Gv = (1-k)*(v*TT+w*B+x*M)/Hv
-    Fv[is.nan(Fv)] = 0
-    Gv[is.nan(Gv)] = 0
-    Fv[is.infinite(Fv)] = 0
-    Gv[is.infinite(Gv)] = 0
-        
-    Ia1 = taua*Fa/(mua+Fa)
-    Ia2 = (taua*Ga/(nua + Ga) )* (phia + (1-phia)/( 1 + exp(ra*( taua*Fa/(mua + Fa) -pa) ) ) )
-    Iv1 = tauv*Fv/(muv+Fv)
-    Iv2 = (tauv*Gv/(nuv + Gv) )* (phiv + (1-phiv)/( 1 + exp(rv*( tauv*Fv/(muv + Fv) -pv) ) ) )        
-        
-    # herbivore pressure
-        
-    PRB = (Ha*Ia1*kappaba + Hv*Iv1*kappabv)/(u*R)
-    PRT = (Ha*Ia1*kappaba + Hv*Iv1*kappabv)/(u*R)
-    PRB[is.nan(PRB)] = 0
-    PRT[is.nan(PRT)] = 0
-    PRB[is.infinite(PRB)] = 0
-    PRT[is.infinite(PRT)] = 0
-
-        
-    sumOHa = omegatHa * T + omegabHa * B + (1-omegatHa-omegabHa) * M
-    OtHa = omegatHa*T /sumOHa
-    ObHa = omegabHa*B /sumOHa
-    OmHa = (1-omegatHa-omegabHa)*M /sumOHa
-
-    sumOHv = omegatHv * T + omegabHv * B + (1-omegatHv-omegabHv) * M
-    OtHv = omegatHv*T /sumOHv
-    ObHv = omegabHv*B /sumOHv
-    OmHv = (1-omegatHv-omegabHv)*M /sumOHv
-    
-    PTB = (OtHa*Ha*Ia2*kappaba + OtHv*Hv*Iv2*kappabv)/(v*TT)
-    PTT = (OtHa*Ha*Ia2*kappata + OtHv*Hv*Iv2*kappatv)/(v*TT)
-
-    PBB = (ObHa*Ha*Ia2*kappaba + ObHv*Hv*Ia2*kappabv)/(w*B) 
-    PBT = (ObHa*Ha*Ia2*kappata + ObHv*Hv*Ia2*kappatv)/(w*B) 
-
-    PMB = (OmHa*Ha*Ia2*kappaba + OmHv*Hv*Iv2*kappabv)/(x*M) 
-    PMT = (OmHa*Ha*Ia2*kappata + OmHv*Hv*Iv2*kappatv)/(x*M) 
-
-    PTB[is.nan(PTB)] = 0
-    PTT[is.nan(PTT)] = 0
-    PBB[is.nan(PBB)] = 0
-    PMB[is.nan(PMB)] = 0
-    PBT[is.nan(PBT)] = 0
-    PMT[is.nan(PMT)] = 0
-    
-    PTB[is.infinite(PTB)] = 0
-    PTT[is.infinite(PTT)] = 0
-    PBB[is.infinite(PBB)] = 0
-    PMB[is.infinite(PMB)] = 0
-    PBT[is.infinite(PBT)] = 0
-    PMT[is.infinite(PMT)] = 0
-
-
-   
-    # compute modified alpha, theta and beta
-    alphab_h = alphab*(1-PRB)
-    alphat_h = alphat*(1-PRT)
-    
-    thetab_h = thetab*(1-PMB)
-    thetat_h = thetat*(1-PMT)
-    
-    betab_h = (1/2)*(1 + betab * cos(pi*PTB) + (1-betab)*cos(pi*(1+PTT)) ) 
-    betat_h = (1/2)*(1 + betat * cos(pi*PBT) + (1-betat)*cos(pi*(1+PBB)) )
-
-    if(sum(alphab_h==0)>0 | sum(alphab_h==1)>0 ) res=FALSE
-    if(sum(alphat_h==0)>0 | sum(alphat_h==1)>0 ) res=FALSE
-    if(sum(betab_h==0)>0 | sum(betab_h==1)>0 ) res=FALSE
-    if(sum(betat_h==0)>0 | sum(betat_h==1)>0 ) res=FALSE
-    if(sum(thetab_h==0)>0 | sum(thetab_h==1)>0 ) res=FALSE
-    if(sum(thetat_h==0)>0 | sum(thetat_h==1)>0 ) res=FALSE
+    if(sum(par_h$alphab_h==0)>0 | sum(par_h$alphab_h==1)>0 ) res=FALSE
+    if(sum(par_h$alphat_h==0)>0 | sum(par_h$alphat_h==1)>0 ) res=FALSE
+    if(sum(par_h$betab_h==0)>0 | sum(par_h$betab_h==1)>0 ) res=FALSE
+    if(sum(par_h$betat_h==0)>0 | sum(par_h$betat_h==1)>0 ) res=FALSE
+    if(sum(par_h$thetab_h==0)>0 | sum(par_h$thetab_h==1)>0 ) res=FALSE
+    if(sum(par_h$thetat_h==0)>0 | sum(par_h$thetat_h==1)>0 ) res=FALSE
     if(sum(eps==0)>0 | sum(eps==1)>0 ) res=FALSE    
-    
     
 return(res)
 }

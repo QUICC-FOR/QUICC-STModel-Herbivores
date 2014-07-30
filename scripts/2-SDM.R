@@ -19,7 +19,14 @@ calib = data #data[sampl,]
 valid = data #data[-sampl,]
 
 # Run the models
+library(nnet)
+SDM1 = multinom(state ~ poly(E,3,raw=TRUE) + poly(P,3,raw=TRUE) + E:P +lon + lat, data = calib)
 
+pred1 = predict(SDM1, new=valid,"class")
+(HK1 = HK(pred1, valid$state)) 
+pred_proba1 = predict(SDM1,new=valid,"prob")
+
+#--
 library(randomForest)
 set.seed(23)
 SDM2 = randomForest(state ~ . , data = data[, c("state", "E", "P","lat", "lon")], ntree = 500)
@@ -30,6 +37,19 @@ pred2 = predict(SDM2,new=valid,"response", OOB=TRUE)
 
 set.seed(23)
 pred_proba = predict(SDM2,new=valid,"prob", OOB=TRUE)
+
+##-- graphs
+par(mfrow = c(2,2))
+plot(lowess(cbind(pred_proba[,"B"], pred_proba1[,"B"])), type = "l", xlab = "RF", ylab = "multinom", xlim = c(0,1), ylim = c(0,1), main = "Boreal")
+abline(0,1,lty=2)
+plot(lowess(cbind(pred_proba[,"T"], pred_proba1[,"T"])), type = "l", xlab = "RF", ylab = "multinom", xlim = c(0,1), ylim = c(0,1), main = "Temperate")
+abline(0,1,lty=2)
+plot(lowess(cbind(pred_proba[,"M"], pred_proba1[,"M"])), type = "l", xlab = "RF", ylab = "multinom", xlim = c(0,1), ylim = c(0,1), main = "Mixed")
+abline(0,1,lty=2)
+plot(lowess(cbind(pred_proba[,"R"], pred_proba1[,"R"])), type = "l", xlab = "RF", ylab = "multinom", xlim = c(0,1), ylim = c(0,1), main = "Early succession")
+abline(0,1,lty=2)
+
+pred_proba = pred_proba1 # pour graphs multinom
 
 par(mfrow = c(2,2))
 plot(lowess(cbind(valid$E,pred_proba[,"B"]), f=1/10), type = "l", xlab = "Annual temperature", ylab="Boreal probability", ylim = c(0,1))
@@ -53,13 +73,13 @@ dev.copy2pdf(file = "../figures/SDM_validation_randomForest.pdf")
 #---------------------------------------------------------------------
 # Get predictions
 #newdat = expand.grid(E=seq(-1.7,7,0.1),P=seq(700, 1600, 10) )
-SDM = SDM2
+SDM = SDM2 #rf
+SDM = SDM1 #multinom
 
 set.seed(23)
 pred_real = predict(SDM,new=dataProj,"prob")
-#set.seed(23)
-#pred_gradient = predict(SDM,new=data.frame(newdat),"prob")
 
 write.table(pred_real,"../data/data_pred_states_randomForest.txt")
-#write.table(cbind(newdat,pred_gradient),"../data/data_pred_gradient_RBTM.txt")
+write.table(pred_real,"../data/data_pred_states_multinom.txt")
+
 
