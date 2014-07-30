@@ -122,20 +122,23 @@ prwise  <- function(x,clim=FALSE){
 }
 
 # Subset only columns needed and remove unclass plots
-res_dat  <- cbind(dat[,c(2:4,68:71)],pred_class=class_dat$pred)
+res_dat  <- cbind(dat[,c(2:6,68:71)],pred_class=class_dat$pred)
 res_dat$pred_class  <- as.character(res_dat$pred_class,stringsAsFactors=FALSE)
+
+write.table(res_dat,file="../data/data_allyears_RBTM.txt")
+
 
 ## Split by id_plot
 res_dat  <- split(res_dat,res_dat$id_plot)
 
 ## Pair
-pair <- function(x) { res  <- cbind(id_plot=x[-1,1],
-                                av_annual_pp=prwise(x[,4],clim=TRUE),
-                                av_annual_mean_tp=prwise(x[,5],clim=TRUE),
-                                av_annual_min_tp=prwise(x[,6],clim=TRUE),
-                                av_annual_max_tp=prwise(x[,7],clim=TRUE),
-                                int=diff(x[,2]),
-                                prwise(x[,8],clim=FALSE))
+pair <- function(x) { res  <- cbind(id_plot=x[-1,"id_plot"],
+                                av_annual_pp=prwise(x[,"annual_pp"],clim=TRUE),
+                                av_annual_mean_tp=prwise(x[,"annual_mean_temp"],clim=TRUE),
+                                av_annual_min_tp=prwise(x[,"annual_min_temp"],clim=TRUE),
+                                av_annual_max_tp=prwise(x[,"annual_max_temp"],clim=TRUE),
+                                int=diff(x[,"yr_measured"]),
+                                prwise(x[,"pred_class"],clim=FALSE))
                       return(res)
                      }
 
@@ -149,12 +152,47 @@ table(reshape_dat$t0)
 
 reshape_dat = reshape_dat[reshape_dat$t0 != "Unclass" & reshape_dat$t1 != "Unclass",]
 
-# ---------------- herbivores
-
-
+head(reshape_dat)
 
 # ------------------- write
 
-write.table(reshape_dat,file="../data/data_categorical_RBTM.txt")
+write.table(reshape_dat,file="../data/data_reshaped_RBTM.txt")
+
+# ---------------- herbivores
+reshape_dat = read.table("../data/data_reshaped_RBTM.txt")
+head(reshape_dat)
+dim(reshape_dat)
+
+moose = read.table("../data/densities_moose.txt", h=T, sep="\t")
+colnames(moose) = c("NO_ZONE"     ,  "id_plot", "moose")
+head(moose)
+dim(moose)
+
+deer = read.table("../data/densities_deer.txt", h=T, sep="\t")
+colnames(deer) = c("NO_ZONE"     ,  "id_plot", "deer")
+head(deer)
+dim(deer)
+
+herbivores = merge(moose[,-1], deer[,-1], by = 'id_plot')
+dim(herbivores)
+head(herbivores)
+herbivores[is.na(herbivores$moose),]
+herbivores[is.na(herbivores$deer),]
+
+finalTab = merge(reshape_dat, herbivores, by = "id_plot")
+head(finalTab)
+dim(finalTab)
+
+library(foreign)
+coords = read.csv("../data/plot_coords.csv")
+head(coords)
+coords$lat[which(coords$lat==0.0)]=NA
+coords = na.omit(coords)
+summary(coords)
+
+fint = merge(finalTab, coords, by = 'id_plot', all.x=TRUE, all.y = FALSE)
+head(unique(fint))
+
+write.table(fint,file="../data/data_reshaped_RBTM_herbivores.txt")
 
 
