@@ -70,6 +70,31 @@
 # Author:  Lora Murphy, Institute of Ecosystem Studies
 # murphyl@ecostudies.org
 ######################################################
+# debug
+#model = model
+#par = pars
+#var = var
+#source_data = data
+#dep_var = "st1"
+#pdf = PDF
+#par_initStep = par_initStep
+#par_testFct = testBounds
+#max_iter = 100
+#initial_temp = 3
+#note = ""
+#progress = TRUE
+#display=FALSE
+#support = FALSE
+#min_change = 1
+#min_drops = 10
+#temp_red = 0.95
+#ns = 20
+#nt = 100
+#delta = 100 
+#slimit = 2
+
+######################################################
+
 anneal<-function(model, 
 par, 
 var, 
@@ -253,7 +278,7 @@ display=TRUE)
   nacp <- rep(0, numpars)     # number of times we accepted changes to each parameter
   range_cycles <- numpars * ns # number of loops before we adjust range
   temp_cycles <- numpars * ns * nt # number of loops before we reduce temperature
-  display_cycles<-numpars*100 # regular update point
+  display_cycles<-numpars # regular update point
   numobs <- length(source_data[[dep_var]]) # number of observations
   aiccorr <- NULL             # value for AIC corr (not entirely sure what that is)
 

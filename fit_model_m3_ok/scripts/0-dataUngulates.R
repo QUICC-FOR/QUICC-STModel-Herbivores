@@ -61,7 +61,7 @@ dim(pts)
 dim(densMoose)
 head(densMoose)
 
-densMoose = unique(densMoose[, c("NO_ZONE", "id_plot", "densites_10ha")])
+densMoose = unique(densMoose[, c("NO_ZONE", "id_plot", "densites_1000ha")])
 densMoose$densites_10ha[is.na(densMoose$densites_10ha)] = 0
 write.table(densMoose, "../data/densities_moose.txt", quote=F, row.names=F, sep="\t")
 
@@ -75,7 +75,7 @@ dim(pts)
 dim(densDeer)
 head(densDeer)
 
-densDeer = unique(densDeer[, c("NO_ZONE", "id_plot", "densites_10ha")])
+densDeer = unique(densDeer[, c("NO_ZONE", "id_plot", "densites_100ha")])
 densDeer$densites_10ha[is.na(densDeer$densites_10ha)] = 0
 write.table(densDeer, "../data/densities_deer.txt", quote=F, row.names=F, sep="\t")
 
