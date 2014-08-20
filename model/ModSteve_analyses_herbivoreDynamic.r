@@ -103,11 +103,11 @@ return(Hv_eq)
 # params 
 #--------
 # moose
-size = 20000
+size = 5000
 
 za = 1
 ca = 0.79
-ma0 = 0.25
+ma0 = 0.2
 mas = 0.25
 taua = 13
 mua = (taua/0.07)*(size/100)/sqrt(314)
@@ -236,23 +236,31 @@ Ha_eq = apply(RTBMH[,], 1,  Ha_eq_solve)
 
 
 par(mfrow = c(1, 2))
-plot(Ha_eq/20/350~RTBMH[,"B"], main="Moose biomasses at equilibrium", xlab = "Boreal proportion", ylab = "#nb indiv (350kg) per 10km2", pch=4, cex=.5)
-points(Ha_eq[nrow(RTBMH)]/20/350~RTBMH[nrow(RTBMH),"B"], col="red")
-plot(Ha_eq/20/350~RTBMH[,"R"], main="Moose biomasses at equilibrium", xlab = "Immature forest proportion", ylab = "#nb indiv (350kg) per 10km2", pch=4, cex=.5)
-points(Ha_eq[nrow(RTBMH)]/20/350~RTBMH[nrow(RTBMH),"R"], col="red")
+plot(Ha_eq/5/350~RTBMH[,"B"], main="", xlab = "Boreal forest\n proportion", ylab = "#nb indiv (350kg) per 10km2", pch=4, cex=.5)
+points(Ha_eq[nrow(RTBMH)]/5/350~RTBMH[nrow(RTBMH),"B"], col="red", lwd=2, cex=2)
+abline(h = 9, col = "red", lty = 2, lwd = 2)
+text(c(1, 1), y=c(10, 7), labels=c("not observed \nin Qc", "observed \nin Qc"), pos=2, col =2)
+plot(Ha_eq/5/350~RTBMH[,"R"], main="", xlab = "Post disturbance forest \nproportion", ylab = "#nb indiv (350kg) per 10km2", pch=4, cex=.5)
+points(Ha_eq[nrow(RTBMH)]/5/350~RTBMH[nrow(RTBMH),"R"], col="red", lwd=2, cex=2)
+abline(h = 9, col = "red", lty = 2, lwd = 2)
+text(c(1, 1), y=c(10, 7), labels=c("not observed \nin Qc", "observed \nin Qc"), pos=2, col =2)
 
-dev.copy2pdf(file = "../../graphs/validation_moose.pdf")
+dev.copy2pdf(file = "../graphs/validation_moose.pdf")
 
 
 Hv_eq = apply(RTBMH[,], 1,  Hv_eq_solve) 
 
 par(mfrow = c(1, 2))
-plot(Hv_eq/10/75~RTBMH[,"B"], main="Deer biomasses at equilibrium", xlab = "Boreal proportion", ylab = "#nb indiv (75kg) per km2", pch=4, cex=.5)
-points(Hv_eq[nrow(RTBMH)]/10/75~RTBMH[nrow(RTBMH),"B"], col="red")
-plot(Hv_eq/10/75~RTBMH[,"R"], main="Deer biomasses at equilibrium", xlab = "Immature forest proportion", ylab = "#nb indiv (75kg) per km2", pch=4, cex=.5)
-points(Hv_eq[nrow(RTBMH)]/10/75~RTBMH[nrow(RTBMH),"R"], col="red")
+plot(Hv_eq/10/75~RTBMH[,"B"], main="", xlab = "Boreal forest\nproportion", ylab = "#nb indiv (75kg) per km2", pch=4, cex=.5)
+points(Hv_eq[nrow(RTBMH)]/10/75~RTBMH[nrow(RTBMH),"B"], col="red", cex=2, lwd=2)
+abline(h = 9.5, col = "red", lty = 2, lwd = 2)
+text(c(1, 1), y=c(11, 7), labels=c("not observed \nin Qc", "observed \nin Qc"), pos=2, col =2)
+plot(Hv_eq/10/75~RTBMH[,"R"], main="", xlab = "Post disturbance forest \nproportion", ylab = "#nb indiv (75kg) per km2", pch=4, cex=.5)
+points(Hv_eq[nrow(RTBMH)]/10/75~RTBMH[nrow(RTBMH),"R"], col="red", cex=2, lwd=2)
+abline(h = 9.5, col = "red", lty = 2, lwd = 2)
+text(c(1, 1), y=c(11, 7), labels=c("not observed \nin Qc", "observed \nin Qc"), pos=2, col =2)
 
-dev.copy2pdf(file = "../../graphs/validation_deer.pdf")
+dev.copy2pdf(file = "../graphs/validation_deer.pdf")
 
 
 

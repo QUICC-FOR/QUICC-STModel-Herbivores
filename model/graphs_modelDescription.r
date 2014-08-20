@@ -28,7 +28,7 @@ ma = ms/(1+(ms/m0-1)*BB)
 
 pdf("../graphs/shelter_effect.pdf", height=4, width=4)
 
-plot(ma~BB, type = "l", ylim = c(0,1), xlab = c("Boreal forest proportion"), ylab = "m (for Moose)")
+plot(ma~BB, type = "l", ylim = c(0,1), xlab = c("Shelter forest proportion"), ylab = "mortality")
 abline(h=m0, lty=2)
 abline(h=ms, lty=2)
 axis(2, at = m0, labels="m0", las = 1, cex.axis = 0.7, line = -0.8)
@@ -95,6 +95,62 @@ axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
 
 dev.off()
 
+#------ old version
+#F1 = seq(0,100,1)
+#tau = 17; mu = tau; 
+#I1 = tau*F1/(tau + F1)
+#
+#pdf("../graphs/intakes_v1.pdf", height=4, width=7)
+#
+#par(mfrow = c(1,2))
+#plot(I1~F1, type ="l", ylim = c(0,tau*1.1), xaxt="n", yaxt="n", ylab = "Intake rate", xlab="Available resource", bty="n")
+#abline(0,1, col = 2)
+#abline(v=mu, lty=2)
+#axis(1, at = mu, labels="mu", las = 1, cex.axis =0.7)
+#abline(h=tau/2, lty=2)
+#axis(2, at = tau/2, labels="tau/2)", las = 1, cex.axis =0.7)
+#abline(h=tau, lty=2)
+#axis(2, at = tau, labels="tau", las = 1, cex.axis =0.7)
+#
+#abline(h=0)
+#abline(v=0)
+#axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)
+#axis(2, at = 0, labels="0",las = 1,  cex.axis =0.7, tick=F)
+#
+##------------------------------------------
+#r=5; 
+#I1 = seq(0,10,0.01)
+#phi = 0
+#I2 = phi + (1-phi)/(1+exp(r*(I1-p)))
+#
+#plot(I2~I1, type ="l", xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n", col="purple")
+#abline(v=p, lty=2)
+#
+#r=1
+#I2 = phi + (1-phi)/(1+exp(r*(I1-p)))
+#lines(I2~I1, col="red")
+#
+#r=25
+#I2 = phi + (1-phi)/(1+exp(r*(I1-p)))
+#lines(I2~I1, col="dodgerblue2")
+#
+#axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)
+#axis(2, at = phi, labels="0", las = 1, cex.axis =0.7)
+#axis(2, at = (1+phi)/2, labels="1/2", las = 1, cex.axis =0.7)
+#
+#axis(1, at = p, labels="p+m", cex.axis =0.7)
+#
+#abline(h=1, lty=2)
+#abline(h=phi, lty=2)
+#abline(h=(1+phi)/2, lty=2)
+#
+#abline(v=0)
+#axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)
+#axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
+#
+#
+#dev.off()
+
 
 #------------------------------------------
 # competition
@@ -131,40 +187,48 @@ plot(PTTable[sel,1], kk[sel])
 #------------------------------------------
 # effects on c and alpha
 #------------------------------------------
-#UG = US = seq(0,1, 0.1)
-#c0 = 0.5; 
-#cb = c0 * (1-US)
-#cg = UG*(1-c0) + c0
+UG = US = seq(0,1, 0.1)
+c0 = 0.5; 
+cb = c0 * (1-US)
+cg = UG*(1-c0) + c0
 #
 #pdf("../graphs/effectsOnVeg.pdf", height=4, width=10)
 #
-#cexax = 1
-#par(mfrow = c(1,3), cex.lab=1.4)
-#plot(cb~US, type ="l", ylim = c(0,1), xaxt="n", yaxt="n", ylab = "c", main = "S/G competition \nwhen the grazer is absent", xlab="Herbivore pressure on S")
-#abline(h=c0, lty=2)
-#axis(2, at = c0, labels="c0", las = 1, cex.axis =cexax)
-#axis(1, at = 0, labels="0", cex.axis =cexax, tick=F)
-#axis(2, at = 0, labels="0", las = 1, cex.axis =cexax, tick=F)
-#axis(1, at = 1, labels="1", cex.axis =cexax, tick=F)
-#axis(2, at = 1, labels="1", las = 1, cex.axis =cexax, tick=F)
-#
-#plot(cg~UG, type ="l", ylim = c(0,1), xaxt="n", yaxt="n", ylab = "c", main = "S/G competition \nwhen the browser is absent", xlab="Herbivore pressure on G")
-#abline(h=c0, lty=2)
-#axis(2, at = c0, labels="c0", las = 1, cex.axis =cexax)
-#axis(1, at = 0, labels="0", cex.axis =cexax, tick=F)
-#axis(2, at = 0, labels="0", las = 1, cex.axis =cexax, tick=F)
-#axis(1, at = 1, labels="1", cex.axis =cexax, tick=F)
-#axis(2, at = 1, labels="1", las = 1, cex.axis =cexax, tick=F)
-#
-#plot(cb~US, type ="l", ylim = c(0,1), xaxt="n", yaxt="n", ylab = "alpha", main = "Succession rate", xlab="Herbivore pressure on S")
-#abline(h=c0, lty=2)
-#axis(2, at = c0, labels="alpha0", las = 3, cex.axis =cexax)
-#
-#axis(1, at = 0, labels="0", cex.axis =cexax, tick=F)
-#axis(2, at = 0, labels="0", las = 1, cex.axis =cexax, tick=F)
-#axis(1, at = 1, labels="1", cex.axis =cexax, tick=F)
-#axis(2, at = 1, labels="1", las = 1, cex.axis =cexax, tick=F)
-#
+cexax = 1
+par(mfrow = c(1,2), cex.lab=1)
+plot(cb~US, type ="l", ylim = c(0,1), xaxt="n", yaxt="n", ylab = "c", main = "", xlab="Herbivore pressure on S")
+abline(h=c0, lty=2)
+axis(2, at = c0, labels="c0", las = 1, cex.axis =cexax)
+axis(1, at = 0, labels="0", cex.axis =cexax, tick=F)
+axis(2, at = 0, labels="0", las = 1, cex.axis =cexax, tick=F)
+axis(1, at = 1, labels="1", cex.axis =cexax, tick=F)
+axis(2, at = 1, labels="1", las = 1, cex.axis =cexax, tick=F)
+
+
+plot(cg~UG, type ="l", ylim = c(0,1), xaxt="n", yaxt="n", ylab = "c", main = "", xlab="Herbivore pressure on G")
+abline(h=c0, lty=2)
+axis(2, at = c0, labels="c0", las = 1, cex.axis =cexax)
+axis(1, at = 0, labels="0", cex.axis =cexax, tick=F)
+axis(2, at = 0, labels="0", las = 1, cex.axis =cexax, tick=F)
+axis(1, at = 1, labels="1", cex.axis =cexax, tick=F)
+axis(2, at = 1, labels="1", las = 1, cex.axis =cexax, tick=F)
+
+dev.copy2pdf(file="../graphs/herbPressure_onc.pdf")
+
+par(mfrow = c(1,1), cex.lab=1)
+
+plot(cb~US, type ="l", ylim = c(0,1), xaxt="n", yaxt="n", ylab = "alpha", main = "", xlab="Herbivore pressure on S")
+abline(h=c0, lty=2)
+axis(2, at = c0, labels="alpha0", las = 1, cex.axis =0.5)
+
+axis(1, at = 0, labels="0", cex.axis =cexax, tick=F)
+axis(2, at = 0, labels="0", las = 1, cex.axis =cexax, tick=F)
+axis(1, at = 1, labels="1", cex.axis =cexax, tick=F)
+axis(2, at = 1, labels="1", las = 1, cex.axis =cexax, tick=F)
+
+dev.copy2pdf(file="../graphs/herbPressure_onalpha.pdf")
+
+
 #dev.off()
 #
 #------------------------------------------
