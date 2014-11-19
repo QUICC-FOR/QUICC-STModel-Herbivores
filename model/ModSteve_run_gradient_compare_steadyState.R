@@ -3,6 +3,7 @@ rm(list=ls())
 #------------------------------------------
 library(deSolve)
 library(rootSolve)
+library(parallel)
 #------------------------------------------
 
 ## parameters 
@@ -14,23 +15,23 @@ library(rootSolve)
 # Av Temp = 3
 # Av precip = 
 #------------------------------------------
-veget_pars = read.table("../fit_model_m3_ok/estimated_params/par_herbivores_m3.txt")
+veget_pars = read.table("../fit_model/estimated_params/par_herbivores_m3_ok.txt")
 attach(veget_pars)
 
 source("params_Herbivores.r")
 
-TP = seq(0,5, length.out = 100)
-PP = seq(0.8, 1.4, length.out = 100)
+TP = seq(0,5, length.out = 20)
+PP = seq(0.8, 1.4, length.out = 20)
 
-ENV = data.frame(TP, PP)
+ENV = expand.grid(TP, PP)
 
 #--- WITH HERBIVORES
 
 res_env = mclapply(1:nrow(ENV), function(i)
 {
 
-ENV1 = TP[i]
-ENV2 = PP[i]
+ENV1 = ENV[i,1]
+ENV2 = ENV[i,2]
 
  
  logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3
@@ -141,8 +142,8 @@ selec = which(!is.na(apply(tab_env, 1, sum)))
 res_env_noH = mclapply(1:nrow(ENV), function(i)
 {
 
-ENV1 = TP[i]
-ENV2 = PP[i]
+ENV1 = ENV[i,1]
+ENV2 = ENV[i,2]
 
  
  logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3
@@ -246,8 +247,68 @@ tab_env[tab_env_noH<0]=NA
 
 selec_noH = which(!is.na(apply(tab_env_noH, 1, sum)))
 
+##------
+par(mfrow = c(2,1))
+plot(lowess(cbind(ENV$TP,tab_env$TT)[selec,]), type = "l", xlab = "Temperature", ylab = "Vegetation proportions", col = "lightgreen")
+lines(lowess(cbind(ENV$TP,tab_env$B)[selec,]), col = "darkgreen")
+lines(lowess(cbind(ENV$TP,tab_env$M)[selec,]), col = "blue")
+lines(lowess(cbind(ENV$TP,tab_env$R)[selec,], f = 1/2), col = "orange")
+
+#plot(lowess(cbind(ENV$TP,tab_env_noH$TT)[selec_noH,]), type = "l", xlab = "Temperature", ylab = "Vegetation proportions", col = "lightgreen")
+lines(lowess(cbind(ENV$TP,tab_env_noH$TT)[selec_noH,]), col = "lightgreen", lty=2)
+lines(lowess(cbind(ENV$TP,tab_env_noH$B)[selec_noH,]), col = "darkgreen", lty = 2)
+lines(lowess(cbind(ENV$TP,tab_env_noH$M)[selec_noH,]), col = "blue", lty = 2)
+lines(lowess(cbind(ENV$TP,tab_env_noH$R)[selec_noH,], f = 1/2), col = "orange", lty =2)
+
+par(mfrow = c(2,1))
+plot((cbind(ENV$TP,tab_env$TT)[selec,]), type = "l", xlab = "Temperature", ylab = "Vegetation proportions", col = "lightgreen")
+lines((cbind(ENV$TP,tab_env$B)[selec,]), col = "darkgreen")
+lines((cbind(ENV$TP,tab_env$M)[selec,]), col = "blue")
+lines((cbind(ENV$TP,tab_env$R)[selec,]), col = "orange")
+
+plot((cbind(ENV$TP,tab_env_noH$TT)[selec_noH,]), type = "l", xlab = "Temperature", ylab = "Vegetation proportions", col = "lightgreen")
+lines((cbind(ENV$TP,tab_env_noH$TT)[selec_noH,]), col = "lightgreen", lty=2)
+lines((cbind(ENV$TP,tab_env_noH$B)[selec_noH,]), col = "darkgreen", lty = 2)
+lines((cbind(ENV$TP,tab_env_noH$M)[selec_noH,]), col = "blue", lty = 2)
+lines((cbind(ENV$TP,tab_env_noH$R)[selec_noH,]), col = "orange", lty =2)
+
+##-----
+coexistence <- function(x)
+{
+res = 1
+if((x[1]>0.0001) & (x[2]<0.0001)) res = 1
+if((x[1]<0.0001) & (x[2]>0.0001)) res = 2
+if((x[1]>0.0001) & (x[2]>0.0001)) res = 3
+return(res)
+}
+land.with = apply(tab_env[,c("TT", "B", "M")], 1, coexistence)
+land.without = apply(tab_env_noH[,c("TT", "B", "M", "R")], 1, which.max)
 
 
+table(land.with)
+landscape = land.with
+##-- GRAPHS 2d
+Z = matrix(landscape,nr = length(TP), nc = length(PP))
+quartz(width = 6, height = 6)
+colo = c("lightgreen", "darkgreen", "orange", "red")
+layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))
+par(mar=c(0,0,0,0))
+plot(1, type = "n", axes=FALSE, xlab="", ylab="")
+#title(title,cex=2)
+#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)
+par(mar=c(5,5,0,2))
+image(TP,PP*1000,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+
+dev.copy2pdf(file = "../graphs/Coexistence_area_herbivores.pdf")
+
+##
+land.with = apply(tab_env[which(ENV[,2]>1 & ENV[,2]<1.05),c("TT", "B", "M")], 1, coexistence)
+
+TpGrad = ENV[which(ENV[,2]>1 & ENV[,2]<1.05),1]
+herbi = tab_env[which(ENV[,2]>1 & ENV[,2]<1.05),c("TT", "B", "M")]
+
+plot(herbi$TT~TpGrad, type = "l", col = "lightgreen", lwd = 2, ylim = c(0,1))
+lines(herbi$B~TpGrad, col = "darkgreen", lwd =2)
 
 
 ##-- GRAPHS ESA

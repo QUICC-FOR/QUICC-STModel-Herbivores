@@ -1,0 +1,586 @@
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0.1)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	if (t>18) dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+#
+ par(mfrow=c(2,2), oma=c(0,0,3,0))   # set number of plots (mfrow) and margin size (oma)#
+#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t=18) P3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+#
+ par(mfrow=c(2,2), oma=c(0,0,3,0))   # set number of plots (mfrow) and margin size (oma)#
+#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t==18) P3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+#
+ par(mfrow=c(2,2), oma=c(0,0,3,0))   # set number of plots (mfrow) and margin size (oma)#
+#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t==18) P3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+-----------------------##
+ # the model parameters: ##
+ #-----------------------##
+ parameters<-c(c1=0,#
+ 			   c2 =0.45,#
+ 			   alpha=1.5,#
+               a=8,#
+               m = 0.8,#
+               b1=2,#
+               b2=2,#
+               b3=2)#
+#
+ #-------------------------##
+ # the initial conditions: ##
+ #-------------------------##
+ state     <-c(X1=0.8,               #
+               X2=0.5,#
+               X3=1,#
+               P1=0.3,#
+               P2=0.01,#
+               P3=0)#
+#
+ #----------------------##
+ # the model equations: ##
+ #----------------------##
+ model<-function(t,state,parameters){#
+  with(as.list(c(state,parameters)),{#
+  	if(t==18) dP3 = 0.1  #
+  	f1 <- 1/(1 + b1*X1)#
+  	f2 <- 1/(1 + b2*X2)#
+  	f3 <- 1/(1 + c2*b3*(X1 + X2))#
+  	dX1 <- X1*(1-X1-c1*alpha*X3) - a*X1*(P1*f1 + c2*P3*f3)#
+  	dX2 <- X2*(1-X2-c1*alpha*X3) - a*X2*(P2*f2 + c2*P3*f3)#
+  	dX3 <- X3*(1-X3-c1*alpha*(X1+X2))#
+  	dP1 <- a*P1*f1*X1 - m*P1#
+  	dP2 <- a*P2*f2*X2 - m*P2#
+  	dP3 <- c2*a*P3*f3*(X1 + X2) - m*P3#
+    list(c(dX1,dX2,dX3,dP1,dP2, dP3))          #
+     })#
+ }#
+#
+ #----------------------##
+ # RUNNING the model:   ##
+ #----------------------##
+ times     <-seq(0,300,0.5)         #
+#
+ out <-as.data.frame(ode(state,times,model,parameters))#
+ plot (times,out$P1,type="l",main="",xlab="time",ylab="density")#
+ lines (times, out$P2, col="red")#
+ lines (times, out$P3, col="blue")
+p00 = function(colo, extinc) (1-extinc)^2p01 = function(colo, extinc) 2*extinc*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*extinc*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, by.row=T)return(PP)}
+MC.trans(0.2, 0.1)
+MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}MC.trans(0.2, 0.1)
+markov = MC.trans(0.2, 0.1)
+apply(markov, 1, sum)
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*extinc*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*extinc*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)apply(markov, 1, sum)
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*extinc*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*colo*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)
+apply(markov, 1, sum)
+eigen(t(markov))
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*extinc*(1-extinc)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*colo*(1-colo)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)apply(markov, 1, sum)
+p00 = function(colo, extinc) (1-colo)^2p01 = function(colo, extinc) 2*colo*(1-colo)p02 = function(colo, extinc) colo^2p11 = function(colo, extinc) (1-colo)*(1-extinc) + extinc*colop12 = function(colo, extinc) colo*(1-extinc)p10 = function(colo, extinc) extinc*(1-colo)p22 = function(colo, extinc) (1-extinc)^2p21 = function(colo, extinc) 2*extinc*(1-extinc)p20 = function(colo, extinc) extinc^2MC.trans = function(cc, ee){PP = matrix(c(p00(cc,ee), p01(cc,ee), p02(cc,ee), p10(cc,ee), p11(cc,ee), p12(cc,ee), p20(cc,ee), p21(cc,ee), p22(cc,ee)), nrow=3, byrow=T)return(PP)}markov = MC.trans(0.2, 0.1)apply(markov, 1, sum)
+eigen(t(markov))$vectors
+eigen(t(markov))
+eigen(t(markov))[,1]/sum(eigen(t(markov))[,1])
+eigen(t(markov))[,1]
+eigen(t(markov))[[1]][,1]
+eigen(t(markov))$vectors[,1]/sum(eigen(t(markov))[,1])
+eigen(t(markov))$vectors[,1]
+eigen(t(markov))$vectors[,1]/sum(eigen(t(markov))$vectors[,1])
+markov = MC.trans(0.3, 0.1)#testapply(markov, 1, sum)#valeurs a equilibre TRANSPOSER POUR VALP A GAUCHEeigen(t(markov))#2eme valp -> vitesse de convergence #1er vectp -> valeur a equilibre IL FAUT NORMALISER !!eigen(t(markov))$vectors[,1]/sum(eigen(t(markov))$vectors[,1])
+5/6
+15/60
+10/25
+cd /Library/Frameworks/R.framework/Resources/share/texmf/tex32/136
+32/136
+q()
+sfInit(parallel=TRUE,cpus=2)
+install.packages("snowfall")
+library(rjaps)
+library(rjags)
+q()
+k=1; u = 6000; v= 3000; w= 3000; x= 3000; taub = 6; thetab =5mub = nub = 30rb=20; pb = mb = 0.05; qb=0.8; zb=10R = seq(0,1,0.01)TBM = seq(0,1,.01)plan = expand.grid(R, TBM)Ikb = mb + pb + lambertWp(qb*zb*exp(-zb*(mb+pb)))/zb
+library(pracma) #lambertWp
+------------------------------------------k=1; u = 6000; v= 3000; w= 3000; x= 3000; taub = 6; thetab =5mub = nub = 30rb=20; pb = mb = 0.05; qb=0.8; zb=10R = seq(0,1,0.01)TBM = seq(0,1,.01)plan = expand.grid(R, TBM)Ikb = mb + pb + lambertWp(qb*zb*exp(-zb*(mb+pb)))/zb
+------------------------------------------# conditions existence Herbivores#------------------------------------------library(pracma) #lambertWp# moose#------------------------------------------k=1; ua = 6000; va= 3000; wa= 3000; xa= 3000; taua = 6; thetaa =5mua = nua = 30ra=20; pa = ma = 0.05; qa=0.8; za=10R = seq(0,1,0.01)TBM = seq(0,1,.01)plan = expand.grid(R, TBM)Ika = ma + pa + lambertWp(qa*za*exp(-za*(ma+pa)))/za#
+intakeHa <- function(Veget, Ikb, Hv=1000){R = Veget[1]TBM = Veget[2]Ia = taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha))Ja = (thetaa*k*(TBM*(va*wa+xa)/3)/Ha)/(nua + k* (TBM*(va*wa+xa)/3)/Ha) * 1/( 1+exp( ra*( taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha)) -pa-ma ) ) )return(Ia+Ja)}Intake_a = apply(plan, 1, intakeHa)
+------------------------------------------# conditions existence Herbivores#------------------------------------------library(pracma) #lambertWp# moose#------------------------------------------k=1; ua = 6000; va= 3000; wa= 3000; xa= 3000; taua = 6; thetaa =5mua = nua = 30ra=20; pa = ma = 0.05; qa=0.8; za=10R = seq(0,1,0.01)TBM = seq(0,1,.01)plan = expand.grid(R, TBM)Ika = ma + pa + lambertWp(qa*za*exp(-za*(ma+pa)))/za#
+intakeHa <- function(Veget, Ikb, Hv=1000){R = Veget[1]TBM = Veget[2]Ia = taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha))Ja = (thetaa*k*(TBM*(va+wa+xa)/3)/Ha)/(nua + k* (TBM*(va+wa+xa)/3)/Ha) * 1/( 1+exp( ra*( taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha)) -pa-ma ) ) )return(Ia+Ja)}Intake_a = apply(plan, 1, intakeHa)
+library(pracma) #lambertWp# moose#------------------------------------------k=1; ua = 6000; va= 3000; wa= 3000; xa= 3000; taua = 6; thetaa =5mua = nua = 30ra=20; pa = ma = 0.05; qa=0.8; za=10R = seq(0,1,0.01)TBM = seq(0,1,.01)plan = expand.grid(R, TBM)Ika = ma + pa + lambertWp(qa*za*exp(-za*(ma+pa)))/za#
+intakeHa <- function(Veget, Ikb, Hv=1000){R = Veget[1]TBM = Veget[2]Ia = taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha))Ja = (thetaa*k*(TBM*(va+wa+xa)/3)/Ha)/(nua + k* (TBM*(va+wa+xa)/3)/Ha) * 1/( 1+exp( ra*( taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha)) -pa-ma ) ) )return(Ia+Ja)}Intake_a = apply(plan, 1, intakeHa)
+------------------------------------------# conditions existence Herbivores#------------------------------------------library(pracma) #lambertWp# moose#------------------------------------------k=1; ua = 6000; va= 3000; wa= 3000; xa= 3000; taua = 6; thetaa =5mua = nua = 30ra=20; pa = ma = 0.05; qa=0.8; za=10R = seq(0,1,0.01)TBM = seq(0,1,.01)plan = expand.grid(R, TBM)Ika = ma + pa + lambertWp(qa*za*exp(-za*(ma+pa)))/za#
+intakeHa <- function(Veget, Ikb, Ha=1000){R = Veget[1]TBM = Veget[2]Ia = taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha))Ja = (thetaa*k*(TBM*(va+wa+xa)/3)/Ha)/(nua + k* (TBM*(va+wa+xa)/3)/Ha) * 1/( 1+exp( ra*( taua*k*ua*(R/Ha)/(mua + k*ua*(R/Ha)) -pa-ma ) ) )return(Ia+Ja)}Intake_a = apply(plan, 1, intakeHa)
+Intake_a
+TBMiso = function(Riso, Ha=1000){A = (1+exp( ra*( taua*k*ua*(Riso/Ha)/(mua + k*ua*(Riso/Ha)) -pa-ma ))) *(Ika - (taua*k*ua*(Riso/Ha))/(mua+k*ua*(Riso/Ha)))T = - Ha *A*nua/((va+wa+xa)/3)*(A-thetaa))return(T)}
+TBMiso = function(Riso, Ha=1000){A = (1+exp( ra*( taua*k*ua*(Riso/Ha)/(mua + k*ua*(Riso/Ha)) -pa-ma ))) *(Ika - (taua*k*ua*(Riso/Ha))/(mua+k*ua*(Riso/Ha)))T = - Ha *A*nua/(((va+wa+xa)/3)*(A-thetaa))return(T)}
+image(TBM, R , matrix(Intake_a, ncol=length(T)), col=rev(heat.colors(10)))
+image(TBM, R , matrix(Intake_a, ncol=length(TBM)), col=rev(heat.colors(10)))
+image(TBM, R, matrix(ifelse(apply(plan, 1, sum)<1, 1, 0), ncol=length(TBM)), col=c(rgb(0,0,0, 1),rgb(1,1,1,0)), add=TRUE)
+lines(TBMiso(Riso), R)
+lines(TBMiso(R), R)
+image(R, TBM , matrix(Intake_a, ncol=length(R)), col=rev(heat.colors(10)))
+lines( R,TBMiso(R))
+F1 = seq(0,200,1)tau = 5; mu = 20; I1 = tau*F1/(mu + F1)
+par(mfrow = c(1,2))plot(I1~F1, type ="l", ylim = c(0,tau*1.1), xaxt="n", yaxt="n", ylab = "Intake rate", xlab="Available resource", bty="n")abline(v=mu, lty=2)axis(1, at = mu, labels="mu", las = 1, cex.axis =0.7)abline(h=tau/2, lty=2)axis(2, at = tau/2, labels="tau/2 \n(theta/2)", las = 1, cex.axis =0.7)abline(h=tau, lty=2)axis(2, at = tau, labels="tau \n(theta)", las = 1, cex.axis =0.7)abline(h=0)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0",las = 1,  cex.axis =0.7, tick=F)
+par(mfrow = c(1,2))plot(I1~F1, type ="l", ylim = c(0,tau*1.1), xaxt="n", yaxt="n", ylab = "Intake rate", xlab="Available resource", bty="n")abline(v=mu, lty=2)axis(1, at = mu, labels="mu", las = 1, cex.axis =0.7)abline(h=tau/2, lty=2)axis(2, at = tau/2, labels="tau/2)", las = 1, cex.axis =0.7)abline(h=tau, lty=2)axis(2, at = tau, labels="tau", las = 1, cex.axis =0.7)abline(h=0)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0",las = 1,  cex.axis =0.7, tick=F)
+par(mfrow = c(1,2))plot(I1~F1, type ="l", ylim = c(0,tau*1.1), xaxt="n", yaxt="n", ylab = "Intake rate", xlab="Available resource", bty="n")abline(v=mu, lty=2)axis(1, at = mu, labels="mu \n(or nu)", las = 1, cex.axis =0.7)abline(h=tau/2, lty=2)axis(2, at = tau/2, labels="tau/2)", las = 1, cex.axis =0.7)abline(h=tau, lty=2)axis(2, at = tau, labels="tau", las = 1, cex.axis =0.7)abline(h=0)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0",las = 1,  cex.axis =0.7, tick=F)
+r=20; I1 = seq(0,1,0.01)I2 = 1/(1+exp(r*(I1-p-m)))
+Intake = seq(0,100,0.01)p = 0.1; q = 0.7; z = .2; m=0.1;M = p+q*exp(-z*Intake)+m
+r=20; I1 = seq(0,1,0.01)I2 = 1/(1+exp(r*(I1-p-m)))
+plot(I2~I1, type ="l", xlim = c(0,1), xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n")abline(v=p+m, lty=2)axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)axis(1, at = p+m, labels="p+m", cex.axis =0.7)abline(h=0)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
+r=20; I1 = seq(0,1,0.01)phi = 0.8I2 = phi/(phi+exp(r*(I1-p-m)))plot(I2~I1, type ="l", xlim = c(0,1), xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n")abline(v=p+m, lty=2)axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)axis(1, at = p+m, labels="p+m", cex.axis =0.7)abline(h=0)abline(h=phi, lty=2)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
+r=20; I1 = seq(0,1,0.01)phi = 0.8I2 = 1/(phi+exp(r*(I1-p-m)))plot(I2~I1, type ="l", xlim = c(0,1), xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n")abline(v=p+m, lty=2)axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)axis(1, at = p+m, labels="p+m", cex.axis =0.7)abline(h=0)abline(h=phi, lty=2)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
+r=20; I1 = seq(0,1,0.01)phi = 0.8I2 = phi/(1+exp(r*(I1-p-m)))plot(I2~I1, type ="l", xlim = c(0,1), xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n")abline(v=p+m, lty=2)axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)axis(1, at = p+m, labels="p+m", cex.axis =0.7)abline(h=0)abline(h=phi, lty=2)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
+r=20; I1 = seq(0,1,0.01)phi = 0.8I2 = phi/(1+exp(r*(I1-p-m)))plot(I2~I1, type ="l", xlim = c(0,1), ylim = c(0,1), xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n")abline(v=p+m, lty=2)axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)axis(1, at = p+m, labels="p+m", cex.axis =0.7)abline(h=0)abline(h=phi, lty=2)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
+r=20; I1 = seq(0,1,0.01)phi = 0.8I2 = phi/(1+exp(r*(I1-p-m)))plot(I2~I1, type ="l", xlim = c(0,1), ylim = c(0,1), xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n")abline(v=p+m, lty=2)axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)axis(2, at = phi, labels="phi", las = 1, cex.axis =0.7)axis(1, at = p+m, labels="p+m", cex.axis =0.7)abline(h=0)abline(h=phi, lty=2)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)
+Intake = seq(0,100,0.01)p = 0.1; q = 0.7; z = .2; m=0.1;M = p+q*exp(-z*Intake)+m
+F1 = seq(0,200,1)tau = 5; mu = 20; I1 = tau*F1/(mu + F1)pdf("../graphs/intakes.pdf", height=4, width=7)par(mfrow = c(1,2))plot(I1~F1, type ="l", ylim = c(0,tau*1.1), xaxt="n", yaxt="n", ylab = "Intake rate", xlab="Available resource", bty="n")abline(v=mu, lty=2)axis(1, at = mu, labels="mu \n(or nu)", las = 1, cex.axis =0.7)abline(h=tau/2, lty=2)axis(2, at = tau/2, labels="tau/2)", las = 1, cex.axis =0.7)abline(h=tau, lty=2)axis(2, at = tau, labels="tau", las = 1, cex.axis =0.7)abline(h=0)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0",las = 1,  cex.axis =0.7, tick=F)#------------------------------------------r=20; I1 = seq(0,1,0.01)phi = 0.8I2 = phi/(1+exp(r*(I1-p-m)))plot(I2~I1, type ="l", xlim = c(0,1), ylim = c(0,1), xaxt="n", yaxt="n", ylab = "Coefficient for non-preferred resource", xlab="Intake of preferred resource", bty="n")abline(v=p+m, lty=2)axis(2, at = 1, labels="1", las = 1, cex.axis =0.7)axis(2, at = phi, labels="phi", las =
+1, cex.axis =0.7)axis(1, at = p+m, labels="p+m", cex.axis =0.7)abline(h=0)abline(h=phi, lty=2)abline(v=0)axis(1, at = 0, labels="0", cex.axis =0.7, tick=F)axis(2, at = 0, labels="0", las = 1, cex.axis =0.7, tick=F)#
+dev.off()
+Ha = Hv = seq(0,1,0.1)
+expand.grid(Ha, Hv)
+Htable = expand.grid(Ha, Hv)
+kk = data.frame(apply(Htable, 1, function(x){exp(-0.5*x[2]/x[1])}))
+kk
+image(kk)
+image(Ha, Hv, matrix(kk, ncol=length(Ha)), col=rev(heat.colors(10)))
+kk
+kk = unlist(apply(Htable, 1, function(x){exp(-0.5*x[2]/x[1])}))
+image(Ha, Hv, matrix(kk, ncol=length(Ha)), col=rev(heat.colors(10)))
+matrix(kk, ncol=length(Ha))
+exp(0.5)
+exp(-0.5)
+exp(-ln(0.5))
+exp(-log(0.5))
+exp(-log(1/0.5))
+kk = unlist(apply(Htable, 1, function(x){exp(-log(1/0.5)*x[2]/x[1])}))
+matrix(kk, ncol=length(Ha))
+image(Ha, Hv, matrix(kk, ncol=length(Ha)), col=rev(heat.colors(10)))
+summary(kk)
+hist(kk)
+Ptable = expand.grid(Ha, Hv, PT)
+PT = seq(0,1,0.1)
+Ptable = expand.grid(Ha, Hv, PT)
+kk = unlist(apply(Htable, 1, function(x){x[3]*exp(-log(1/0.5)*x[2]/x[1])}))
+split(kk, Ptable$Ha)
+head(kk)
+kk
+Ptable
+kk = unlist(apply(Ptable, 1, function(x){x[3]*exp(-log(1/0.5)*x[2]/x[1])}))
+kk
+head(PTable)
+head(Ptable)
+kk[Ptable[,1]==1]
+sel = kk[Ptable[,1]==1]
+sel = Ptable[,1]==1
+plot(Ptable[sel,3], kk[sel])
+kk = unlist(apply(Ptable, 1, function(x){x[3]*(exp(-log(1/0.5)*x[2]/x[1])-0.5) + 0.5}))
+plot(Ptable[sel,3], kk[sel])
+sel = Ptable[,2]==1
+plot(Ptable[sel,3], kk[sel])
+sel = Ptable[,2]==0
+plot(Ptable[sel,3], kk[sel])
+sel = Ptable[,1]==0
+plot(Ptable[sel,3], kk[sel])
+PT = seq(0,1,0.1)Ptable = expand.grid(Ha, Hv, PT)kk = unlist(apply(Ptable, 1, function(x){x[3]*(exp(-log(1/0.5)*(1-x[1])/(1-x[2])-0.5) + 0.5}))
+kk = unlist(apply(Ptable, 1, function(x){x[3]*(exp(-log(1/0.5)*((1-x[1])/(1-x[2]))-0.5) + 0.5}))
+kk = unlist(apply(Ptable, 1, function(x){x[3]*(exp(-log(1/0.5)*((1-x[1])/(1-x[2])))-0.5) + 0.5}))
+sel = Ptable[,1]==1
+plot(Ptable[sel,3], kk[sel])
+sel = Ptable[,1]==0
+plot(Ptable[sel,3], kk[sel])
+x <- c("A and B", "A, B and C", "A, B, C and D", "foobar")#
+pattern <- "[[:space:]]*(,|and)[[:space:]]"#
+## Match data from regexpr()#
+m <- regexpr(pattern, x)#
+regmatches(x, m)#
+regmatches(x, m, invert = TRUE)
+x = "je suis; certaine que ;Temperature; peut marcher"
+pattern = "([:alpha:])+;"
+m = regexpr(pattern, x)
+m
+regmachtes(x,m)
+regmatches(x,m)
+pattern = "([:alpha:])+;"
+x
+pattern = "[:alpha:]+;"
+m = regexpr(pattern, x)
+m
+regmatches(x,m, invert=T)
+pattern = "[[:alpha:]]+;"
+m = regexpr(pattern, x)
+m
+regmatches(x,m, invert=T)
+regmatches(x,m, invert=F)
+pattern = "[[:a-zA-z:]]+;"
+m = regexpr(pattern, x)
+pattern = "[[:a-zA-Z:]]+;"
+m = regexpr(pattern, x)
+pattern = "[[:alpha:]]+;"
+m = regexpr(pattern, x)
+m
+regmatches(x,m, invert=T)
+regmatches(x,m, invert=F)
+pattern = "[[:alpha:]]+;"x = "je suis; certaine que ;Temperature; peut marcher"#
+pattern = "([:alpha:])+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)
+x = "je suis; certaine que ;Temperature; peut marcher"#
+pattern = "([:alpha:])+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)
+x = "je suis; certaine que ;Temperature; peut marcher"#
+pattern = "([:alpha:])+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)x = "je suis; certaine que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)
+x = "je suis; certaine que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)
+x = "je suis; certaine que ; Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)
+x = "je suis; certaine que ;temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)
+?regmatches
+x = "je suis; certaine que ;temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = regexec(pattern, x)#
+regmatches(x,m)
+x = "je suis certaine que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = regexpr(pattern, x)#
+regmatches(x,m)
+m
+x = "je suis; certaine que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = grep(pattern, x)#
+regmatches(x,m)
+m
+m = gregexpr(pattern, x)
+m
+regmatches(x,m)
+x = "je suis; certaine que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = grep(pattern, x)#
+regmatches(x,m)x = "je suis; certaine; depuis 0 que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = gregexpr(pattern, x)#
+regmatches(x,m)x = "je suis; certaine; depuis 0 que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = gregexpr(pattern, x)#
+regmatches(x,m)
+x = "je suis; certaine; depuis 0 que ;Temperature; peut marcher"#
+pattern = "[[:alpha:]]+;"#
+m = gregexpr(pattern, x)#
+regmatches(x,m)
+m
+regexec([[0-9]], x)
+regexec("[0-9]", x)
+x = "je suis; certaine; depuis 0 que ;Temperature; peut marcher 45°"#
+pattern = "[[:alpha:]]+;"#
+m = gregexpr(pattern, x)#
+regmatches(x,m)
+regexec("[0-9]", x)
+regexpr("[0-9]", x)
+regexpr("[0-9]", x)+1
+x = "je suis; certaine; depuis 0 que ;Temperature; peut marcher 45°"#
+pattern = "[[:alpha:]]+;"#
+m = gregexpr(pattern, x)#
+regmatches(x,m[m<regexpr("[0-9]", x)])
+m
+m[which(m<regexpr("[0-9]", x)])
+m<regexpr("[0-9]", x)
+regexpr("[0-9]", x)
+m
+m[[1]]<regexpr("[0-9]", x)
+m[which(m[[1]]<regexpr("[0-9]", x)])
+m[which(m[[1]]<regexpr("[0-9]", x))]
+which(m[[1]]<regexpr("[0-9]", x))
+m[which(m[[1]]<regexpr("[0-9]", x))]
+m[[1]][which(m[[1]]<regexpr("[0-9]", x))]
+regmatches(x,m[[1]][which(m[[1]]<regexpr("[0-9]", x)]))
+regmatches(x,m[[1]][which(m[[1]]<regexpr("[0-9]", x))])
+x
+m
+x = strplit(x, regexpr("[0-9]", x))[[1]]
+x = strsplit(x, regexpr("[0-9]", x))[[1]]
+x
+x = "je suis; certaine; depuis 0 que ;Temperature; peut marcher 45°"#
+x = strsplit(x, "[0-9]")[[1]]
+x
+x = "je suis; certaine; depuis 0 que ;Temperature; peut marcher 45°"#
+x = strsplit(x, "[0-9]")[[1]][1]#
+pattern = "[[:alpha:]]+;"#
+m = gregexpr(pattern, x)#
+regmatches(x,m)
+rm(list=ls())# Range kutta #------------------------------------------library(deSolve)library(rootSolve)library(parallel)#------------------------------------------## parameters # #------------------------------------------#dat = read.table("../fit_model/data/data_reshaped_RBTM_herbivores.txt")## parameters vegetation model# Av Temp = 3# Av precip = #------------------------------------------veget_pars = read.table("../fit_model/estimated_params/par_herbivores_m3_ok.txt")attach(veget_pars)
+setwd('/Users/isabelle/Documents/RESEARCH/ANALYSES/2014_veget_herbi_dyn/FourSTModel/model')
+rm(list=ls())# Range kutta #------------------------------------------library(deSolve)library(rootSolve)library(parallel)#------------------------------------------## parameters # #------------------------------------------#dat = read.table("../fit_model/data/data_reshaped_RBTM_herbivores.txt")## parameters vegetation model# Av Temp = 3# Av precip = #------------------------------------------veget_pars = read.table("../fit_model/estimated_params/par_herbivores_m3_ok.txt")attach(veget_pars)
+TP = seq(0,5, length.out = 20)PP = seq(0.8, 1.4, length.out = 20)ENV = expand.grid(TP, PP)#--- WITH HERBIVORESres_env = mclapply(1:nrow(ENV), function(i){ENV1 = TP[i]ENV2 = PP[i]#
+ logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3    logit_alphat 	= at0 + at1*ENV1 + at2*ENV1^2 + at3*ENV2 + at4*ENV2^2 + at5*ENV1^3 + at6*ENV2^3    logit_betab 	= bb0 + bb1*ENV1 + bb2*ENV1^2 + bb3*ENV2 + bb4*ENV2^2 + bb5*ENV1^3 + bb6*ENV2^3    logit_betat 	= bt0 + bt1*ENV1 + bt2*ENV1^2 + bt3*ENV2 + bt4*ENV2^2 + bt5*ENV1^3 + bt6*ENV2^3    logit_thetab	= tb0 + tb1*ENV1 + tb2*ENV1^2 + tb3*ENV2 + tb4*ENV2^2 + tb5*ENV1^3 + tb6*ENV2^3    logit_thetat	= tt0 + tt1*ENV1 + tt2*ENV1^2 + tt3*ENV2 + tt4*ENV2^2 + tt5*ENV1^3 + tt6*ENV2^3    logit_eps 	= e0  + e1*ENV1  + e2*ENV1^2 + e3*ENV2 + e4*ENV2^2 + e5*ENV1^3 + e6*ENV2^3alphab = exp(logit_alphab)/(1+exp(logit_alphab))alphat = exp(logit_alphat)/(1+exp(logit_alphat))betab = exp(logit_betab)/(1+exp(logit_betab))betat = exp(logit_betat)/(1+exp(logit_betat))thetab = exp(logit_thetab)/(1+exp(logit_thetab))thetat = exp(logit_thetat)/(1+exp(logit_thetat))eps = exp(logit_eps)/(1+exp(logit_eps))#
+# parameter list#------------------------------------------pars = list(alphat=alphat,alphab=alphab,betat = betat,betab = betab,thetat = thetat, thetab = thetab,eps = eps, k0 = k0, ua=ua,uv =uv,va=va,vv=vv,wa=wa,wv=wv,xa=xa,xv=xv, omegatHa = omegatHa, omegatHv = omegatHv, kappata = kappata, kappaba = kappaba, kappatv = kappatv, kappabv = kappabv, dva = dva, dvv = dvv, za = za, ca =ca, ma0 = ma0, mas = mas, taua = taua, mua = mua, rhoa = rhoa, nua = nua, phia = phia, pa = pa, ra = ra, zv = zv, cv = cv, mv0 = mv0, mvs = mvs, tauv = tauv, muv = muv, rhov = rhov, nuv = nuv, pv = pv, phiv = phiv, rv=rv)#------------------------------------------source("model_fct.r")#
+# initial conditionsT0 = c(TT=0.08, B=0.34, M=.32, Ha = dva, Hv=dvv)#------------------------------------------# run simulationout = stode(func=model, y=T0, parms = pars, positive=TRUE, maxiter=5000)#, method="iteration")#res = c(out$y,R = 1-out$y["TT"]-out$y["B"]-out$y["M"])#res = res[c(6, 1:5)]#names(res) = c("R", "T", "B", "M", "moose", "deer")return(out$y)})tab_env = t(data.frame(res_env))rownames(tab_env) = 1:nrow(tab_env)head(tab_env)tab_env = data.frame(tab_env)tab_env$R = 1 - tab_env$TT - tab_env$B - tab_env$M#
+sum(tab_env<0)tab_env[tab_env<0]=NAselec = which(!is.na(apply(tab_env, 1, sum)))
+res_env = mclapply(1:nrow(ENV), function(i){ENV1 = TP[i]ENV2 = PP[i]#
+ logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3    logit_alphat 	= at0 + at1*ENV1 + at2*ENV1^2 + at3*ENV2 + at4*ENV2^2 + at5*ENV1^3 + at6*ENV2^3    logit_betab 	= bb0 + bb1*ENV1 + bb2*ENV1^2 + bb3*ENV2 + bb4*ENV2^2 + bb5*ENV1^3 + bb6*ENV2^3    logit_betat 	= bt0 + bt1*ENV1 + bt2*ENV1^2 + bt3*ENV2 + bt4*ENV2^2 + bt5*ENV1^3 + bt6*ENV2^3    logit_thetab	= tb0 + tb1*ENV1 + tb2*ENV1^2 + tb3*ENV2 + tb4*ENV2^2 + tb5*ENV1^3 + tb6*ENV2^3    logit_thetat	= tt0 + tt1*ENV1 + tt2*ENV1^2 + tt3*ENV2 + tt4*ENV2^2 + tt5*ENV1^3 + tt6*ENV2^3    logit_eps 	= e0  + e1*ENV1  + e2*ENV1^2 + e3*ENV2 + e4*ENV2^2 + e5*ENV1^3 + e6*ENV2^3alphab = exp(logit_alphab)/(1+exp(logit_alphab))alphat = exp(logit_alphat)/(1+exp(logit_alphat))betab = exp(logit_betab)/(1+exp(logit_betab))betat = exp(logit_betat)/(1+exp(logit_betat))thetab = exp(logit_thetab)/(1+exp(logit_thetab))thetat = exp(logit_thetat)/(1+exp(logit_thetat))eps = exp(logit_eps)/(1+exp(logit_eps))#
+# parameter list#------------------------------------------pars = list(alphat=alphat,alphab=alphab,betat = betat,betab = betab,thetat = thetat, thetab = thetab,eps = eps, k0 = k0, ua=ua,uv =uv,va=va,vv=vv,wa=wa,wv=wv,xa=xa,xv=xv, omegatHa = omegatHa, omegatHv = omegatHv, kappata = kappata, kappaba = kappaba, kappatv = kappatv, kappabv = kappabv, dva = dva, dvv = dvv, za = za, ca =ca, ma0 = ma0, mas = mas, taua = taua, mua = mua, rhoa = rhoa, nua = nua, phia = phia, pa = pa, ra = ra, zv = zv, cv = cv, mv0 = mv0, mvs = mvs, tauv = tauv, muv = muv, rhov = rhov, nuv = nuv, pv = pv, phiv = phiv, rv=rv)#------------------------------------------source("model_fct.r")#
+# initial conditionsT0 = c(TT=0.08, B=0.34, M=.32, Ha = dva, Hv=dvv)#------------------------------------------# run simulationout = stode(func=model, y=T0, parms = pars, positive=TRUE, maxiter=5000)#, method="iteration")#res = c(out$y,R = 1-out$y["TT"]-out$y["B"]-out$y["M"])#res = res[c(6, 1:5)]#names(res) = c("R", "T", "B", "M", "moose", "deer")return(out$y)})
+tab_env
+ENV
+res_env = mclapply(1:nrow(ENV), function(i){ENV1 = TP[i]ENV2 = PP[i]#
+ logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3    logit_alphat 	= at0 + at1*ENV1 + at2*ENV1^2 + at3*ENV2 + at4*ENV2^2 + at5*ENV1^3 + at6*ENV2^3    logit_betab 	= bb0 + bb1*ENV1 + bb2*ENV1^2 + bb3*ENV2 + bb4*ENV2^2 + bb5*ENV1^3 + bb6*ENV2^3    logit_betat 	= bt0 + bt1*ENV1 + bt2*ENV1^2 + bt3*ENV2 + bt4*ENV2^2 + bt5*ENV1^3 + bt6*ENV2^3    logit_thetab	= tb0 + tb1*ENV1 + tb2*ENV1^2 + tb3*ENV2 + tb4*ENV2^2 + tb5*ENV1^3 + tb6*ENV2^3    logit_thetat	= tt0 + tt1*ENV1 + tt2*ENV1^2 + tt3*ENV2 + tt4*ENV2^2 + tt5*ENV1^3 + tt6*ENV2^3    logit_eps 	= e0  + e1*ENV1  + e2*ENV1^2 + e3*ENV2 + e4*ENV2^2 + e5*ENV1^3 + e6*ENV2^3alphab = exp(logit_alphab)/(1+exp(logit_alphab))alphat = exp(logit_alphat)/(1+exp(logit_alphat))betab = exp(logit_betab)/(1+exp(logit_betab))betat = exp(logit_betat)/(1+exp(logit_betat))thetab = exp(logit_thetab)/(1+exp(logit_thetab))thetat = exp(logit_thetat)/(1+exp(logit_thetat))eps = exp(logit_eps)/(1+exp(logit_eps))#
+# parameter list#------------------------------------------pars = list(alphat=alphat,alphab=alphab,betat = betat,betab = betab,thetat = thetat, thetab = thetab,eps = eps, k0 = k0, ua=ua,uv =uv,va=va,vv=vv,wa=wa,wv=wv,xa=xa,xv=xv, omegatHa = omegatHa, omegatHv = omegatHv, kappata = kappata, kappaba = kappaba, kappatv = kappatv, kappabv = kappabv, dva = dva, dvv = dvv, za = za, ca =ca, ma0 = ma0, mas = mas, taua = taua, mua = mua, rhoa = rhoa, nua = nua, phia = phia, pa = pa, ra = ra, zv = zv, cv = cv, mv0 = mv0, mvs = mvs, tauv = tauv, muv = muv, rhov = rhov, nuv = nuv, pv = pv, phiv = phiv, rv=rv)#------------------------------------------source("model_fct.r")#
+# initial conditionsT0 = c(TT=0.08, B=0.34, M=.32, Ha = dva, Hv=dvv)#------------------------------------------# run simulationout = stode(func=model, y=T0, parms = pars, positive=TRUE, maxiter=5000)#, method="iteration")#res = c(out$y,R = 1-out$y["TT"]-out$y["B"]-out$y["M"])#res = res[c(6, 1:5)]#names(res) = c("R", "T", "B", "M", "moose", "deer")return(out$y)})
+rm(list=ls())# Range kutta #------------------------------------------library(deSolve)library(rootSolve)library(parallel)#------------------------------------------## parameters # #------------------------------------------#dat = read.table("../fit_model/data/data_reshaped_RBTM_herbivores.txt")## parameters vegetation model# Av Temp = 3# Av precip = #------------------------------------------veget_pars = read.table("../fit_model/estimated_params/par_herbivores_m3_ok.txt")attach(veget_pars)source("params_Herbivores.r")TP = seq(0,5, length.out = 20)PP = seq(0.8, 1.4, length.out = 20)ENV = expand.grid(TP, PP)#--- WITH HERBIVORESres_env = mclapply(1:nrow(ENV), function(i){ENV1 = TP[i]ENV2 = PP[i]#
+ logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3    logit_alphat 	= at0 + at1*ENV1 + at2*ENV1^2 + at3*ENV2 + at4*ENV2^2 + at5*ENV1^3 + at6*ENV2^3    logit_betab 	= bb0 + bb1*ENV1 + bb2*ENV1^2 + bb3*ENV2 + bb4*ENV2^2 + bb5*ENV1^3 + bb6*ENV2^3    logit_betat 	= bt0 + bt1*ENV1 + bt2*ENV1^2 + bt3*ENV2 + bt4*ENV2^2 + bt5*ENV1^3 + bt6*ENV2^3    logit_thetab	= tb0 + tb1*ENV1 + tb2*ENV1^2 + tb3*ENV2 + tb4*ENV2^2 + tb5*ENV1^3 + tb6*ENV2^3    logit_thetat	= tt0 + tt1*ENV1 + tt2*ENV1^2 + tt3*ENV2 + tt4*ENV2^2 + tt5*ENV1^3 + tt6*ENV2^3    logit_eps 	= e0  + e1*ENV1  + e2*ENV1^2 + e3*ENV2 + e4*ENV2^2 + e5*ENV1^3 + e6*ENV2^3alphab = exp(logit_alphab)/(1+exp(logit_alphab))alphat = exp(logit_alphat)/(1+exp(logit_alphat))betab = exp(logit_betab)/(1+exp(logit_betab))betat = exp(logit_betat)/(1+exp(logit_betat))thetab = exp(logit_thetab)/(1+exp(logit_thetab))thetat = exp(logit_thetat)/(1+exp(logit_thetat))eps = exp(logit_eps)/(1+exp(logit_eps))#
+# parameter list#------------------------------------------pars = list(alphat=alphat,alphab=alphab,betat = betat,betab = betab,thetat = thetat, thetab = thetab,eps = eps, k0 = k0, ua=ua,uv =uv,va=va,vv=vv,wa=wa,wv=wv,xa=xa,xv=xv, omegatHa = omegatHa, omegatHv = omegatHv, kappata = kappata, kappaba = kappaba, kappatv = kappatv, kappabv = kappabv, dva = dva, dvv = dvv, za = za, ca =ca, ma0 = ma0, mas = mas, taua = taua, mua = mua, rhoa = rhoa, nua = nua, phia = phia, pa = pa, ra = ra, zv = zv, cv = cv, mv0 = mv0, mvs = mvs, tauv = tauv, muv = muv, rhov = rhov, nuv = nuv, pv = pv, phiv = phiv, rv=rv)#------------------------------------------source("model_fct.r")#
+# initial conditionsT0 = c(TT=0.08, B=0.34, M=.32, Ha = dva, Hv=dvv)#------------------------------------------# run simulationout = stode(func=model, y=T0, parms = pars, positive=TRUE, maxiter=5000)#, method="iteration")#res = c(out$y,R = 1-out$y["TT"]-out$y["B"]-out$y["M"])#res = res[c(6, 1:5)]#names(res) = c("R", "T", "B", "M", "moose", "deer")return(out$y)})
+i=10
+logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3    logit_alphat 	= at0 + at1*ENV1 + at2*ENV1^2 + at3*ENV2 + at4*ENV2^2 + at5*ENV1^3 + at6*ENV2^3    logit_betab 	= bb0 + bb1*ENV1 + bb2*ENV1^2 + bb3*ENV2 + bb4*ENV2^2 + bb5*ENV1^3 + bb6*ENV2^3    logit_betat 	= bt0 + bt1*ENV1 + bt2*ENV1^2 + bt3*ENV2 + bt4*ENV2^2 + bt5*ENV1^3 + bt6*ENV2^3    logit_thetab	= tb0 + tb1*ENV1 + tb2*ENV1^2 + tb3*ENV2 + tb4*ENV2^2 + tb5*ENV1^3 + tb6*ENV2^3    logit_thetat	= tt0 + tt1*ENV1 + tt2*ENV1^2 + tt3*ENV2 + tt4*ENV2^2 + tt5*ENV1^3 + tt6*ENV2^3    logit_eps 	= e0  + e1*ENV1  + e2*ENV1^2 + e3*ENV2 + e4*ENV2^2 + e5*ENV1^3 + e6*ENV2^3
+ENV1 = TP[i]ENV2 = PP[i]#
+ logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3    logit_alphat 	= at0 + at1*ENV1 + at2*ENV1^2 + at3*ENV2 + at4*ENV2^2 + at5*ENV1^3 + at6*ENV2^3    logit_betab 	= bb0 + bb1*ENV1 + bb2*ENV1^2 + bb3*ENV2 + bb4*ENV2^2 + bb5*ENV1^3 + bb6*ENV2^3    logit_betat 	= bt0 + bt1*ENV1 + bt2*ENV1^2 + bt3*ENV2 + bt4*ENV2^2 + bt5*ENV1^3 + bt6*ENV2^3    logit_thetab	= tb0 + tb1*ENV1 + tb2*ENV1^2 + tb3*ENV2 + tb4*ENV2^2 + tb5*ENV1^3 + tb6*ENV2^3    logit_thetat	= tt0 + tt1*ENV1 + tt2*ENV1^2 + tt3*ENV2 + tt4*ENV2^2 + tt5*ENV1^3 + tt6*ENV2^3    logit_eps 	= e0  + e1*ENV1  + e2*ENV1^2 + e3*ENV2 + e4*ENV2^2 + e5*ENV1^3 + e6*ENV2^3
+TP = seq(0,5, length.out = 20)PP = seq(0.8, 1.4, length.out = 20)ENV = expand.grid(TP, PP)#--- WITH HERBIVORESres_env = mclapply(1:nrow(ENV), function(i){ENV1 = ENV[i,1]ENV2 = ENV[i,2]#
+ logit_alphab 	= ab0 + ab1*ENV1 + ab2*ENV1^2 + ab3*ENV2 + ab4*ENV2^2 + ab5*ENV1^3 + ab6*ENV2^3    logit_alphat 	= at0 + at1*ENV1 + at2*ENV1^2 + at3*ENV2 + at4*ENV2^2 + at5*ENV1^3 + at6*ENV2^3    logit_betab 	= bb0 + bb1*ENV1 + bb2*ENV1^2 + bb3*ENV2 + bb4*ENV2^2 + bb5*ENV1^3 + bb6*ENV2^3    logit_betat 	= bt0 + bt1*ENV1 + bt2*ENV1^2 + bt3*ENV2 + bt4*ENV2^2 + bt5*ENV1^3 + bt6*ENV2^3    logit_thetab	= tb0 + tb1*ENV1 + tb2*ENV1^2 + tb3*ENV2 + tb4*ENV2^2 + tb5*ENV1^3 + tb6*ENV2^3    logit_thetat	= tt0 + tt1*ENV1 + tt2*ENV1^2 + tt3*ENV2 + tt4*ENV2^2 + tt5*ENV1^3 + tt6*ENV2^3    logit_eps 	= e0  + e1*ENV1  + e2*ENV1^2 + e3*ENV2 + e4*ENV2^2 + e5*ENV1^3 + e6*ENV2^3alphab = exp(logit_alphab)/(1+exp(logit_alphab))alphat = exp(logit_alphat)/(1+exp(logit_alphat))betab = exp(logit_betab)/(1+exp(logit_betab))betat = exp(logit_betat)/(1+exp(logit_betat))thetab = exp(logit_thetab)/(1+exp(logit_thetab))thetat = exp(logit_thetat)/(1+exp(logit_thetat))eps = exp(logit_eps)/(1+exp(logit_eps))#
+# parameter list#------------------------------------------pars = list(alphat=alphat,alphab=alphab,betat = betat,betab = betab,thetat = thetat, thetab = thetab,eps = eps, k0 = k0, ua=ua,uv =uv,va=va,vv=vv,wa=wa,wv=wv,xa=xa,xv=xv, omegatHa = omegatHa, omegatHv = omegatHv, kappata = kappata, kappaba = kappaba, kappatv = kappatv, kappabv = kappabv, dva = dva, dvv = dvv, za = za, ca =ca, ma0 = ma0, mas = mas, taua = taua, mua = mua, rhoa = rhoa, nua = nua, phia = phia, pa = pa, ra = ra, zv = zv, cv = cv, mv0 = mv0, mvs = mvs, tauv = tauv, muv = muv, rhov = rhov, nuv = nuv, pv = pv, phiv = phiv, rv=rv)#------------------------------------------source("model_fct.r")#
+# initial conditionsT0 = c(TT=0.08, B=0.34, M=.32, Ha = dva, Hv=dvv)#------------------------------------------# run simulationout = stode(func=model, y=T0, parms = pars, positive=TRUE, maxiter=5000)#, method="iteration")#res = c(out$y,R = 1-out$y["TT"]-out$y["B"]-out$y["M"])#res = res[c(6, 1:5)]#names(res) = c("R", "T", "B", "M", "moose", "deer")return(out$y)})
+land.with = apply(tab_env[,c("TT", "B", "M", "R")], 1, which.max)
+tab_env_noH = t(data.frame(res_env_noH))rownames(tab_env_noH) = 1:nrow(tab_env_noH)head(tab_env_noH)tab_env_noH = data.frame(tab_env_noH)tab_env_noH$R = 1 - tab_env_noH$TT - tab_env_noH$B - tab_env_noH$M#
+sum(tab_env_noH<0)tab_env[tab_env_noH<0]=NAselec_noH = which(!is.na(apply(tab_env_noH, 1, sum)))
+tab_env_noH = t(data.frame(res_env_noH))
+tab_env = t(data.frame(res_env))rownames(tab_env) = 1:nrow(tab_env)head(tab_env)tab_env = data.frame(tab_env)tab_env$R = 1 - tab_env$TT - tab_env$B - tab_env$M#
+sum(tab_env<0)tab_env[tab_env<0]=NAselec = which(!is.na(apply(tab_env, 1, sum)))
+land.with = apply(tab_env[,c("TT", "B", "M", "R")], 1, which.max)
+land.with
+landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))#quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "blue", "orange")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+land.with = apply(tab_env[,c("TT", "B", "M")], 1, which.max)
+land.with
+table(land.with)
+landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))#quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+table(land.with)landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+dev.copy2pdf(file = "../graphs/Coexistence_area_herbivores.pdf")
+table(land.with)landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP*100,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))dev.copy2pdf(file = "../graphs/Coexistence_area_herbivores.pdf")
+table(land.with)landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP*1000,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))dev.copy2pdf(file = "../graphs/Coexistence_area_herbivores.pdf")
+coexistence <- function(x){res = 1if((x[1]>0.01) & (x[2]<0.01)) res = 1if((x[1]<0.01) & (x[2]>0.01)) res = 2if((x[1]>0.01) & (x[2]>0.01)) res = 3return(res)}land.with = apply(tab_env[,c("TT", "B", "M")], 1, which.max)
+table(land.with)landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP*1000,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+coexistence <- function(x){res = 1if((x[1]>0.001) & (x[2]<0.001)) res = 1if((x[1]<0.001) & (x[2]>0.001)) res = 2if((x[1]>0.001) & (x[2]>0.001)) res = 3return(res)}land.with = apply(tab_env[,c("TT", "B", "M")], 1, which.max)land.without = apply(tab_env_noH[,c("TT", "B", "M", "R")], 1, which.max)#
+table(land.with)landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP*1000,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+land.with = apply(tab_env[,c("TT", "B", "M")], 1, coexistence)
+table(land.with)landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP*1000,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+table(land.with)
+coexistence <- function(x){res = 1if((x[1]>0.0001) & (x[2]<0.0001)) res = 1if((x[1]<0.0001) & (x[2]>0.0001)) res = 2if((x[1]>0.0001) & (x[2]>0.0001)) res = 3return(res)}land.with = apply(tab_env[,c("TT", "B", "M")], 1, coexistence)
+table(land.with)landscape = land.with##-- GRAPHS 2dZ = matrix(landscape,nr = length(TP), nc = length(PP))quartz(width = 6, height = 6)colo = c("lightgreen", "darkgreen", "orange", "red")layout(matrix(c(1,2),nr=2,nc=1,byrow=TRUE),heights = c(1,6))par(mar=c(0,0,0,0))plot(1, type = "n", axes=FALSE, xlab="", ylab="")#title(title,cex=2)#legend("center",legend = c("AltSS","Boreal Wins","Temperate Wins","Coexistence"),fill = colo,bty = "n",horiz = TRUE,cex = 0.8)par(mar=c(5,5,0,2))image(TP,PP*1000,Z,xlab = "Mean annual temperature", ylab = "Annual precipitation (mm)", cex.lab = 1.5, cex.axis = 1.25, col = colo, breaks = c(0:4))#grey(c(0:3)/3))
+tab_env[which(ENV$PP==1),]
+ENV$PP
+ENV
+tab_env[which(ENV[,"PP"]==1),]
+ENV[,"PP"]
+head(ENV)
+tab_env[which(ENV[,2]==1),]
+table(ENV[,2])
+tab_env[which(ENV[,2]==1.05263157894737),]
+tab_env[which(ENV[,2]>1 & ENV[,2]<1.05),]
+land.with = apply(tab_env[which(ENV[,2]>1 & ENV[,2]<1.05),c("TT", "B", "M")], 1, coexistence)
+land.with
+ENV[which(ENV[,2]>1 & ENV[,2]<1.05),1]
+TpGrad = ENV[which(ENV[,2]>1 & ENV[,2]<1.05),1]
+plot(land.with~TpGrad)
+herbi = tab_env[which(ENV[,2]>1 & ENV[,2]<1.05),c("TT", "B", "M")]
+plot(herbi$TT~TpGrad)
+plot(herbi$TT~TpGrad, type = "l", col = "lightgreen", lwd = 2)
+plot(herbi$TT~TpGrad, type = "l", col = "lightgreen", lwd = 2, ylim = c(0,1))
+lines(herbi$B~TpGrad, col = "darkgreen", lwd =2)

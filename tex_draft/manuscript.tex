@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+
+
+%% ----------------------------------
+
+
+\usepackage[margin=1in]{geometry}
+
+% use proper unicode fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\setlength{\parindent}{0pt} % remove automatic indent
+
+\usepackage{amsmath} % for better display of equations
+
+\usepackage{natbib} 
+
+%% ----------title ------------------------
+
+\usepackage{titling} % controls the way the title information is displayed
+\pretitle{\begin{flushleft}\Large}
+\posttitle{\end{flushleft}}
+\predate{}
+\postdate{}
+\preauthor{\begin{flushleft}}
+\postauthor{\end{flushleft}}
+\setlength{\droptitle}{-3em}
+
+\usepackage{authblk} % adds some nice options for displaying the author list
+
+%---------------- plots -----------
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{calc, shapes}
+\usetikzlibrary{shapes.geometric,shapes.arrows,decorations.pathmorphing}
+\usetikzlibrary{matrix,chains,scopes,positioning,arrows,fit}
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{sidecap}
+\sidecaptionvpos{figure}{c}
+\usepackage{wrapfig}
+\usepackage[font=scriptsize]{caption}
+\graphicspath{{tex/}}
+
+%% ---------comments-------------------------
+
+\usepackage{comment}
+% 1- specify a new environment
+% 2- use includecomment{} makes it appears in the pdf without format distinction (useful for edits)
+% 3- use excludecomment{} makes it invisible in the pdf (useful for comments)
+% available colors: red, green, blue, cyan, magenta, yellow, black, gray, white, darkgray, lightgray, brown, lime, olive, orange, pink, purple, teal, violet
+\specialcomment{IB}{\begingroup\sffamily\color{blue}\footnotesize\flushleft\textsuperscript{IB}}{\endgroup} % comments
+\specialcomment{DG}{\begingroup\sffamily\color{olive}\footnotesize\flushleft\textsuperscript{DG}}{\endgroup} % comments
+\specialcomment{TD}{\begingroup\sffamily\color{red}\footnotesize\flushleft\textsuperscript{TD}}{\endgroup} % comments
+
+% use as \begin{IB} ... \end{IB}
+
+\usepackage[normalem]{ulem} % for strikeouts using \sout{}
+\usepackage[textsize=footnotesize, backgroundcolor=white]{todonotes} % for margin notes using \todo{}
+
+
+%% ----------------------------------
+%
+%     Title and authorship information
+%
+%% ----------------------------------
+
+
+\title{How vegetation-herbivores feedbacks mediate the temperate-boreal forest transition?}
+\date{}
+\author[1]{Isabelle Boulangeat}
+\author[2]{Mathieu Leblond}
+\author[3]{Tanguy Daufresne}
+\author[1]{Steve?, Matt?}
+\author[1]{Dominique Gravel}
+\affil[1]{Département de biologie, Université du Québec à Rimouski, 300, Allée des Ursulines, Rimouski, QC, G5L 3A1, Canada}
+\affil[3]{INRA - UMR 210 Eco\&Sols - Bat 12, 2 Place Viala, F-34060 Montpellier cedex 1}
+
+
+
+%% ----------------------------------
+%
+%     END PREAMBLE
+%
+%% ----------------------------------
+
+\begin{document}
+
+%% ----------------------------------
+%
+%     TITLE PAGE
+%
+%% ----------------------------------
+
+
+\maketitle
+
+% \begin{flushleft}
+% \textbf{Keywords:} Uncertainty, scaling, range dynamics, trees, disturbances, patterns and processes, predict or understand, climate change, biotic interactions, spatial ecology, decision making, metamodelling, species distribution modeling
+% \end{flushleft}
+
+
+%% ----------------------------------
+%
+%     REST OF DOCUMENT
+%
+%% ----------------------------------
+
+\input{draft}
+
+%---------------------------------------------
+%---------------------------------------------
+
+%% ----------------------------------
+%
+%     REFERENCES
+%
+%% ----------------------------------
+\newpage
+\renewcommand\refname{Literature Cited}
+\bibliography{herbiveg}{}
+\bibliographystyle{herbiveg}
+
+\end{document}

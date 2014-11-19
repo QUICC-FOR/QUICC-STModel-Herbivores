@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2013)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: herbiveg.aux
+The style file: herbiveg.bst
+Database file #1: herbiveg.bib
+You've used 2 entries,
+            2938 wiz_defined-function locations,
+            608 strings with 5058 characters,
+and the built_in function-call counts, 1211 in all, are:
+= -- 108
+> -- 42
+< -- 1
++ -- 20
+- -- 13
+* -- 85
+:= -- 192
+add.period$ -- 8
+call.type$ -- 2
+change.case$ -- 14
+chr.to.int$ -- 3
+cite$ -- 2
+duplicate$ -- 81
+empty$ -- 90
+format.name$ -- 16
+if$ -- 235
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 16
+newline$ -- 18
+num.names$ -- 8
+pop$ -- 32
+preamble$ -- 1
+purify$ -- 12
+quote$ -- 0
+skip$ -- 34
+stack$ -- 0
+substring$ -- 72
+swap$ -- 41
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 18
+warning$ -- 0
+while$ -- 10
+width$ -- 0
+write$ -- 35
